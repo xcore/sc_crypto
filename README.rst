@@ -1,5 +1,5 @@
-<title>
-.......
+Cryptographic routines
+......................
 
 :Stable release:  unreleased
 
@@ -13,12 +13,12 @@
 Key Features
 ============
 
-* SHA2
+* Speed optimised SHA2
 
 To Do
 =====
 
-* optimise SHA2
+* Change SHA2 to enable arbitrary sized blocks to be digested.
 * AES
 * RSA
 
