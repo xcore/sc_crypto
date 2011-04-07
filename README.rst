@@ -13,12 +13,12 @@
 Key Features
 ============
 
-* None
+* SHA2
 
 To Do
 =====
 
-* SHA2
+* optimise SHA2
 * AES
 * RSA
 
