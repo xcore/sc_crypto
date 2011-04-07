@@ -40,9 +40,7 @@
     add R7, R7, r11   ;/* r8, r9, r10, r11 dead*/ \
     ldw r8, cp[N]   ;\
     add R7, R7, r8   ;\
-    ldw r9, dp[N]   ;\
-    byterev r9, r9  ;\
-    stw r9, dp[N]   ;\
+    ldw r9, dp[N]   /* byterev r9, r9 ; stw r9, dp[N]  */ ;\
     add R7, R7, r9            /* r8, r9, r10, r11 dead*/   ;\
     and r8, R4, R5   ;\
     not r9, R4   ;\
@@ -158,11 +156,34 @@
     add r11, r11, r8   ;\
     add R7, r11, R7
 
-#define NW 12
+#define NW (13+16)
 
     .globl doRoundS
     .linkset doRoundS.nstackwords, NW
     .globl doRoundS.nstackwords
+
+    .align 4
+roundconstants: 
+    .word 0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5
+    .word 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5
+    .word 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3
+    .word 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0 // marker after 16
+    .word 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc
+    .word 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da
+    .word 0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7
+    .word 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967
+    .word 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13
+    .word 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85
+    .word 0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3
+    .word 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070
+    .word 0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5
+    .word 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3
+    .word 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208
+    .word 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2, 0 //marker after 64
+
+initialhash:    
+    .word 0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a
+    .word 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
     
 doRoundS:   
     entsp NW
@@ -176,18 +197,51 @@ doRoundS:
     stw   dp, sp[7]
     stw   r0, sp[8]
     stw   cp, sp[9]
+    stw   r1, sp[10]
 
-    set   dp, r1
-    set   cp, r2
+    ldap  r11, roundconstants
+    set   cp, r11
     
-    ldw   r7, r0[7]
-    ldw   r6, r0[6]
-    ldw   r5, r0[5]
-    ldw   r4, r0[4]
-    ldw   r3, r0[3]
-    ldw   r2, r0[2]
-    ldw   r1, r0[1]
-    ldw   r0, r0[0]
+nextDigest:                // Create an initial hash
+    ldap  r11, initialhash
+    ldw   r7, r11[7]
+    ldw   r6, r11[6]
+    ldw   r5, r11[5]
+    ldw   r4, r11[4]
+    ldw   r3, r11[3]
+    ldw   r2, r11[2]
+    ldw   r1, r11[1]
+    ldw   r0, r11[0]
+
+nextBlock:                 // First save the hash
+    stw   r7, sp[34]
+    stw   r6, sp[33]
+    stw   r5, sp[32]
+    stw   r4, sp[31]
+    stw   r3, sp[30]
+    stw   r2, sp[29]
+    stw   r1, sp[28]
+    stw   r0, sp[27]
+
+    ldaw  dp, sp[11]
+    ldc   r9, 8            // Now read 16 words
+    ldw   r10, sp[10]
+    outct res[r10], 1      // signal that we are ready
+    testct r11, res[r10]
+    bt    r11, output
+readnextword:
+    in    r11, res[r10]
+    byterev r11, r11
+    stw   r11, dp[0]
+    in    r11, res[r10]
+    byterev r11, r11
+    stw   r11, dp[1]
+    ldaw  dp, dp[2]
+    sub   r9, r9, 1
+    bt    r9, readnextword
+
+    extdp 16
+
 loop:   
     ROUNDFIRST(r0,r1,r2,r3,r4,r5,r6,r7,0)
     ROUNDFIRST(r7,r0,r1,r2,r3,r4,r5,r6,1)
@@ -229,32 +283,41 @@ loop2:
     ldw  r11, cp[0]
     bt   r11, loop2
 
-    ldw   r10, sp[8]
-    ldw   r11, r10[7]
+    ldaw  r11, cp[1]
+    set   cp, r11
+    ldw   r11, sp[34]
     add   r7, r7, r11
-    stw   r7, r10[7]
-    ldw   r11, r10[6]
+    ldw   r11, sp[33]
     add   r6, r6, r11
-    stw   r6, r10[6]
-    ldw   r11, r10[5]
+    ldw   r11, sp[32]
     add   r5, r5, r11
-    stw   r5, r10[5]
-    ldw   r11, r10[4]
+    ldw   r11, sp[31]
     add   r4, r4, r11
-    stw   r4, r10[4]
-    ldw   r11, r10[3]
+    ldw   r11, sp[30]
     add   r3, r3, r11
-    stw   r3, r10[3]
-    ldw   r11, r10[2]
+    ldw   r11, sp[29]
     add   r2, r2, r11
-    stw   r2, r10[2]
-    ldw   r11, r10[1]
+    ldw   r11, sp[28]
     add   r1, r1, r11
-    stw   r1, r10[1]
-    ldw   r11, r10[0]
+    ldw   r11, sp[27]
     add   r0, r0, r11
-    stw   r0, r10[0]
-        
+
+    bu nextBlock
+    
+output:
+    inct  r11, res[r10]
+    
+    out   res[r10], r0
+    out   res[r10], r1
+    out   res[r10], r2
+    out   res[r10], r3
+    out   res[r10], r4
+    out   res[r10], r5
+    out   res[r10], r6
+    out   res[r10], r7
+    outct res[r10], 1
+    bu    nextDigest
+    
     ldw   r4, sp[0]
     ldw   r5, sp[1]
     ldw   r6, sp[2]

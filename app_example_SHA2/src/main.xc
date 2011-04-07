@@ -21,6 +21,7 @@ int main(void) {
     }
     printf(" %d\n", t1-t0);
     t :> t2;
+    
     computeSHA2S((message, unsigned int[16]), hash);
     t :> t3;
     for(int i = 0; i < 8; i++) {
