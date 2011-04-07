@@ -4,3 +4,4 @@
 // LICENSE.txt and at <http://github.xcore.com/>
 
 void computeSHA2(unsigned int message[16], unsigned int hash[8]);
+void computeSHA2S(unsigned int message[16], unsigned int hash[8]);
