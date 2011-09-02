@@ -12,3 +12,6 @@ void sha256Update(streaming chanend c, unsigned char message[], int n);
 void sha256End(streaming chanend c, unsigned int hash[8]);
 void sha256Terminate(streaming chanend c);
 
+void sha256BlockBegin(unsigned int hash[8]);
+void sha256BlockUpdate(unsigned int hash[8], unsigned char message[], int n);
+void sha256BlockEnd(unsigned int hash[8]);

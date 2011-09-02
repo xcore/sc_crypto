@@ -29,19 +29,10 @@ struct test {
 
 int main(void) {
     unsigned int hash[8];
-    char message[65]="This is a test message for SHA-2 that is 55 bytes long.";
     timer t;
-    int t0, t1, t2, t3;
+    int t2, t3;
     streaming chan c;
 
-    message[55] = 0x80;
-    t :> t0;
-    computeSHA2((message, unsigned int[16]), hash);
-    t :> t1;
-    for(int i = 0; i < 8; i++) {
-        printf("%08x", hash[i]);
-    }
-    printf(" %d\n", t1-t0);
     par {
         sha256Process(c);
         {
@@ -55,7 +46,17 @@ int main(void) {
                     printf("%08x", hash[i]);
                 }
                 printf(" %d\n", t3-t2);
-                printf("%s\n", tests[j].result);
+
+                t :> t2;
+                sha256BlockBegin(hash);
+                sha256BlockUpdate(hash, tests[j].string, tests[j].n);
+                sha256BlockEnd(hash);
+                t :> t3;
+                for(int i = 0; i < 8; i++) {
+                    printf("%08x", hash[i]);
+                }
+                printf(" %d\n", t3-t2);
+                printf("%s\n\n", tests[j].result);
             }
             sha256Terminate(c);
         }

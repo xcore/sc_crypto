@@ -100,7 +100,12 @@ static void doChunk(unsigned int words[16], unsigned int hash[8]) {
     hash[7] += h;
 }
 
-void computeSHA2(unsigned int message[16], unsigned int hash[8]) {
+static unsigned int blockCount = 0;
+static unsigned char blockData[64];
+
+extern void sha256Block(unsigned int h[8], unsigned char data[64]);
+
+void sha256BlockBegin(unsigned int hash[8]) {
     hash[0] = 0x6a09e667;
     hash[1] = 0xbb67ae85;
     hash[2] = 0x3c6ef372;
@@ -109,12 +114,41 @@ void computeSHA2(unsigned int message[16], unsigned int hash[8]) {
     hash[5] = 0x9b05688c;
     hash[6] = 0x1f83d9ab;
     hash[7] = 0x5be0cd19;
-    message[15] = byterev(55*8);
-    message[14] = 0;
-    doChunk(message, hash);
+    blockCount = 0;
 }
 
-extern void doRoundS(int dummy, streaming chanend c);
+void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
+    for(int i = 0; i < n; i++) {
+        blockData[blockCount++] = bytes[i];
+        if ((blockCount&63) == 0) {
+            sha256Block(hash, blockData);
+            blockCount = 0;
+        }
+    }
+}
+
+void sha256BlockEnd(unsigned int hash[8]) {
+    int len = blockCount * 8;
+    blockData[blockCount++] = 0x80;
+    if ((blockCount&63) == 0) {
+        sha256Block(hash, blockData);
+        blockCount = 0;
+    }
+    blockCount &= 63;
+    if (blockCount > 56) {
+        while(blockCount < 64) {
+            blockData[blockCount++] = 0;
+        }
+        sha256Block(hash, blockData);
+        blockCount = 0;
+    }
+    while(blockCount < 56) {
+        blockData[blockCount++] = 0;
+    }
+    (blockData, unsigned int[16])[14] = 0;
+    (blockData, unsigned int[16])[15] = byterev(len);
+    sha256Block(hash, blockData);
+}
 
 static int byteCnt;
 
@@ -162,7 +196,3 @@ void sha256Terminate(streaming chanend c) {
 }
 
 
-
-
-void computeSHA2S(streaming chanend c, unsigned char message[], unsigned int hash[8], int n) {
-}
