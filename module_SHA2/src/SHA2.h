@@ -4,4 +4,11 @@
 // LICENSE.txt and at <http://github.xcore.com/>
 
 void computeSHA2(unsigned int message[16], unsigned int hash[8]);
-void computeSHA2S(unsigned int message[16], unsigned int hash[8]);
+
+void sha256Process(streaming chanend c);
+
+void sha256Begin(streaming chanend c);
+void sha256Update(streaming chanend c, unsigned char message[], int n);
+void sha256End(streaming chanend c, unsigned int hash[8]);
+void sha256Terminate(streaming chanend c);
+

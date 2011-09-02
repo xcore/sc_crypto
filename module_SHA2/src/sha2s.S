@@ -156,11 +156,13 @@
     add r11, r11, r8   ;\
     add R7, r11, R7
 
-#define NW (13+16)
-
-    .globl doRoundS
-    .linkset doRoundS.nstackwords, NW
-    .globl doRoundS.nstackwords
+#define NW (36)
+    
+    .cc_top sha256Process.func, sha256Process
+    
+    .globl sha256Process
+    .linkset sha256Process.nstackwords, NW
+    .globl sha256Process.nstackwords
 
     .align 4
 roundconstants: 
@@ -185,7 +187,7 @@ initialhash:
     .word 0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a
     .word 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
     
-doRoundS:   
+sha256Process:   
     entsp NW
     stw   r4, sp[0]
     stw   r5, sp[1]
@@ -195,13 +197,9 @@ doRoundS:
     stw   r9, sp[5]
     stw   r10, sp[6]
     stw   dp, sp[7]
-    stw   r0, sp[8]
+    stw   r0, sp[10]
     stw   cp, sp[9]
-    stw   r1, sp[10]
 
-    ldap  r11, roundconstants
-    set   cp, r11
-    
 nextDigest:                // Create an initial hash
     ldap  r11, initialhash
     ldw   r7, r11[7]
@@ -213,7 +211,13 @@ nextDigest:                // Create an initial hash
     ldw   r1, r11[1]
     ldw   r0, r11[0]
 
+    ldw   r10, sp[10]
+    outct res[r10], 1      // signal that we are ready
+
 nextBlock:                 // First save the hash
+    ldap  r11, roundconstants
+    set   cp, r11
+    
     stw   r7, sp[34]
     stw   r6, sp[33]
     stw   r5, sp[32]
@@ -226,15 +230,12 @@ nextBlock:                 // First save the hash
     ldaw  dp, sp[11]
     ldc   r9, 8            // Now read 16 words
     ldw   r10, sp[10]
-    outct res[r10], 1      // signal that we are ready
     testct r11, res[r10]
     bt    r11, output
 readnextword:
     in    r11, res[r10]
-    byterev r11, r11
     stw   r11, dp[0]
     in    r11, res[r10]
-    byterev r11, r11
     stw   r11, dp[1]
     ldaw  dp, dp[2]
     sub   r9, r9, 1
@@ -306,6 +307,8 @@ loop2:
     
 output:
     inct  r11, res[r10]
+    eq    r11, r11, 4
+    bt    r11, doReturn
     
     out   res[r10], r0
     out   res[r10], r1
@@ -318,6 +321,7 @@ output:
     outct res[r10], 1
     bu    nextDigest
     
+doReturn:   
     ldw   r4, sp[0]
     ldw   r5, sp[1]
     ldw   r6, sp[2]
@@ -328,3 +332,6 @@ output:
     ldw   dp, sp[7]
     ldw   cp, sp[9]
     retsp NW
+
+    .cc_bottom sha256Process.func
+    

@@ -116,39 +116,53 @@ void computeSHA2(unsigned int message[16], unsigned int hash[8]) {
 
 extern void doRoundS(int dummy, streaming chanend c);
 
-static void doChunkS(unsigned int words[16], unsigned int hash[8]) {
-    streaming chan c;
-    par {
-        doRoundS(0, c);
-        {
-            sinct(c);
-            for(int i = 0; i < 16; i++) {
-                c <: words[i];
-            }
-            soutct(c, 3);
-            sinct(c);
-            for(int i = 0; i < 8; i++) {
-                c :> hash[i];
-                printf("%08x", hash[i]);
-            }
-            printf("\n");
-        }
+static int byteCnt;
+
+void sha256Begin(streaming chanend c) {
+    sinct(c);
+    byteCnt = 0;
+}
+
+void sha256Update(streaming chanend c, unsigned char bytes[], int n) {
+    for(int i = 0; i < n; i++) {
+        c <: bytes[i];
     }
+    byteCnt += n;
+}
+
+void sha256End(streaming chanend c, unsigned int hash[8]) {
+    int len = byteCnt * 8;
+    c <: (unsigned char) 0x80;
+    byteCnt++;
+    byteCnt &= 63;
+    if (byteCnt > 56) {
+        while(byteCnt < 64) {
+            c <: (unsigned char) 0;
+            byteCnt++;
+        }
+        byteCnt = 0;
+    }
+    while(byteCnt < 56) {
+        c <: (unsigned char) 0;
+        byteCnt++;
+    }
+    c <: (unsigned int) 0;
+    c <: (unsigned int) len;
+    soutct(c, 3);
+    for(int i = 0; i < 8; i++) {
+        c :> hash[i];
+    }
+    sinct(c);
+    byteCnt = 0;
+}
+
+void sha256Terminate(streaming chanend c) {
+    sinct(c);
+    soutct(c, 4);
 }
 
 
 
 
-void computeSHA2S(unsigned int message[16], unsigned int hash[8]) {
-/*    hash[0] = 0x6a09e667;
-    hash[1] = 0xbb67ae85;
-    hash[2] = 0x3c6ef372;
-    hash[3] = 0xa54ff53a;
-    hash[4] = 0x510e527f;
-    hash[5] = 0x9b05688c;
-    hash[6] = 0x1f83d9ab;
-    hash[7] = 0x5be0cd19;*/
-    message[15] = byterev(55*8);
-    message[14] = 0;
-    doChunkS(message, hash);
+void computeSHA2S(streaming chanend c, unsigned char message[], unsigned int hash[8], int n) {
 }
