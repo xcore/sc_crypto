@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "SHA2.h"
 
+/*
 #define rotr(a,n)    (((a)>>(n)) | ((a)<<(32-(n))))
 #define shiftr(a,n)    ((a)>>(n))
 
@@ -99,12 +100,13 @@ static void doChunk(unsigned int words[16], unsigned int hash[8]) {
     hash[6] += g;
     hash[7] += h;
 }
-
+*/
 static unsigned int blockCount = 0;
-static unsigned char blockData[64];
+static unsigned int blockData[16];
 
-extern void sha256Block(unsigned int h[8], unsigned char data[64]);
+extern void sha256Block(unsigned int h[8], unsigned int data[16]);
 
+#pragma unsafe arrays
 void sha256BlockBegin(unsigned int hash[8]) {
     hash[0] = 0x6a09e667;
     hash[1] = 0xbb67ae85;
@@ -117,9 +119,10 @@ void sha256BlockBegin(unsigned int hash[8]) {
     blockCount = 0;
 }
 
+#pragma unsafe arrays
 void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
     for(int i = 0; i < n; i++) {
-        blockData[blockCount++] = bytes[i];
+        (blockData, unsigned char[64])[blockCount++] = bytes[i];
         if ((blockCount&63) == 0) {
             sha256Block(hash, blockData);
             blockCount = 0;
@@ -127,9 +130,10 @@ void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
     }
 }
 
+#pragma unsafe arrays
 void sha256BlockEnd(unsigned int hash[8]) {
     int len = blockCount * 8;
-    blockData[blockCount++] = 0x80;
+    (blockData, unsigned char[64])[blockCount++] = 0x80;
     if ((blockCount&63) == 0) {
         sha256Block(hash, blockData);
         blockCount = 0;
@@ -137,16 +141,16 @@ void sha256BlockEnd(unsigned int hash[8]) {
     blockCount &= 63;
     if (blockCount > 56) {
         while(blockCount < 64) {
-            blockData[blockCount++] = 0;
+            (blockData, unsigned char[64])[blockCount++] = 0;
         }
         sha256Block(hash, blockData);
         blockCount = 0;
     }
     while(blockCount < 56) {
-        blockData[blockCount++] = 0;
+        (blockData, unsigned char[64])[blockCount++] = 0;
     }
-    (blockData, unsigned int[16])[14] = 0;
-    (blockData, unsigned int[16])[15] = byterev(len);
+    blockData[14] = 0;
+    blockData[15] = byterev(len);
     sha256Block(hash, blockData);
 }
 
@@ -157,6 +161,7 @@ void sha256Begin(streaming chanend c) {
     byteCnt = 0;
 }
 
+#pragma unsafe arrays
 void sha256Update(streaming chanend c, unsigned char bytes[], int n) {
     for(int i = 0; i < n; i++) {
         c <: bytes[i];
@@ -164,6 +169,7 @@ void sha256Update(streaming chanend c, unsigned char bytes[], int n) {
     byteCnt += n;
 }
 
+#pragma unsafe arrays
 void sha256End(streaming chanend c, unsigned int hash[8]) {
     int len = byteCnt * 8;
     c <: (unsigned char) 0x80;

@@ -359,6 +359,15 @@ sha256Block:
     stw   r1, sp[10]
     stw   cp, sp[9]
 
+    ldc  r2, 0
+byteRevBlock:   
+    ldw  r11, r1[r2]
+    byterev r11, r11
+    stw  r11, r1[r2]
+    add  r2, r2, 1
+    shr  r11, r2, 4
+    bf   r11, byteRevBlock
+    
     ldap  r11, roundconstants
     set   cp, r11
 
