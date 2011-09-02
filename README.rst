@@ -18,7 +18,6 @@ Key Features
 To Do
 =====
 
-* Change SHA2 to enable arbitrary sized blocks to be digested.
 * AES
 * RSA
 
@@ -32,11 +31,7 @@ At present - only SHA256 is implemented at chunk level.
 Known Issues
 ============
 
-* To complete SHA256, the implementation needs to:
-  be made to work on messages of arbitrary length of N bits (at present, it only works for N = 512-64).
-  This involves: a)
-  append a '1' bit and (512-(N+1+64)%512) zero bits; b) append the message length as a 64 bit number;
-  c) split the message in 512 byte blocks prior to processing.
+None
 
 Required Repositories
 ================
@@ -46,4 +41,4 @@ Required Repositories
 Support
 =======
 
-None at present
+Please raise an issue on github if you have any ideas.
