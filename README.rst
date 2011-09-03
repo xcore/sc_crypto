@@ -25,7 +25,9 @@ Firmware Overview
 =================
 
 This repo contains modules implementing various standard crypto algorithms.
-At present - only SHA256 is implemented at chunk level.
+At present - only SHA256 is implemented. The core of the algorith, has been
+hand-optimised, there is some waste in the interface routines that ought to
+be optimised too.
 
 
 Known Issues
