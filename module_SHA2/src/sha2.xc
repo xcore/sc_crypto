@@ -122,10 +122,9 @@ void sha256BlockBegin(unsigned int hash[8]) {
 #pragma unsafe arrays
 void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
     for(int i = 0; i < n; i++) {
-        (blockData, unsigned char[64])[blockCount++] = bytes[i];
+        (blockData, unsigned char[64])[(blockCount++)&63] = bytes[i];
         if ((blockCount&63) == 0) {
             sha256Block(hash, blockData);
-            blockCount = 0;
         }
     }
 }
@@ -133,10 +132,9 @@ void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
 #pragma unsafe arrays
 void sha256BlockEnd(unsigned int hash[8]) {
     int len = blockCount * 8;
-    (blockData, unsigned char[64])[blockCount++] = 0x80;
+    (blockData, unsigned char[64])[(blockCount++)&63] = 0x80;
     if ((blockCount&63) == 0) {
         sha256Block(hash, blockData);
-        blockCount = 0;
     }
     blockCount &= 63;
     if (blockCount > 56) {
