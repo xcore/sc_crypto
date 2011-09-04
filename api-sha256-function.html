@@ -1,0 +1,193 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SHA256 with function calls &mdash; Cryptography Component v0v1 documentation</title>
+    <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0v1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
+    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="prev" title="SHA256 with a server thread" href="api-sha256-process.html" /> 
+
+<script>
+function setheight() {
+h1 = document.getElementById('d1').style.height;
+h2 = document.getElementById('d2').style.height;
+
+if (parseInt(h1) > parseInt(h2)) {
+document.getElementById('d2').style.height=h1 + "px";
+}
+else {
+document.getElementById('d1').style.height=h2 + "px";
+}
+
+}
+</script>
+</head>
+
+<body onload="setheight();">
+
+  
+
+    <div class="document" id='d1'>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+<div style="float: right">
+<a href="api-sha256-process.html"
+                        title="previous chapter"> &lt&lt </a>
+</div>
+
+            
+  <div class="section" id="sha256-with-function-calls">
+<h1>SHA256 with function calls<a class="headerlink" href="#sha256-with-function-calls" title="Permalink to this headline">¶</a></h1>
+<p>Call the function <tt class="docutils literal"><span class="pre">sha256BlockBegin()</span></tt> to start computing a new hash, the
+function <tt class="docutils literal"><span class="pre">sha256BlockUpdate()</span></tt> to incorporate some more data into the
+hash, and the
+function <tt class="docutils literal"><span class="pre">sha256BlockEnd()</span></tt> to obtain the hash.</p>
+<p>Note that the current interface can only perform the computation on a byte
+stream. This can be changed to a bit stream, the hashing thread
+itself works on a bit stream already, it just requires a different set of
+functions.</p>
+<p>The two threads communicate by means of a streaming channel; optimised for
+computation on a single core.</p>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<dt><dl class="function">
+<dt id="sha256BlockBegin">
+void <tt class="descname">sha256BlockBegin</tt><big>(</big>unsigned int<em>&nbsp;hash[8]</em><big>)</big><a class="headerlink" href="#sha256BlockBegin" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of three functions that comprise the function based interface to the SHA256 library.</p>
+<p>It must be called to initialise the hash.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hash</strong> &#8211; an array of integers that holds the hash.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256BlockUpdate</p>
+<p>sha256BlockEnd</p>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="sha256BlockUpdate">
+void <tt class="descname">sha256BlockUpdate</tt><big>(</big>unsigned int<em>&nbsp;hash[8]</em>, unsigned char<em>&nbsp;message[]</em>, int<em>&nbsp;n</em><big>)</big><a class="headerlink" href="#sha256BlockUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of three functions that comprise the function based interface to the SHA256 library.</p>
+<p>It is called to incorporate data into the hash. THe data is supplied as an array of unsigned characters (bytes).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hash</strong> &#8211; an array of integers that holds the hash.</li>
+<li><strong>message</strong> &#8211; an array of unsigned characters that contains the data to be incorporated into the hash</li>
+<li><strong>n</strong> &#8211; The number of bytes to incorporate into the hash.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256BlockBegin</p>
+<p>sha256BlockEnd</p>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="sha256BlockEnd">
+void <tt class="descname">sha256BlockEnd</tt><big>(</big>unsigned int<em>&nbsp;hash[8]</em><big>)</big><a class="headerlink" href="#sha256BlockEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of three functions that comprise the function based interface to the SHA256 library.</p>
+<p>It is ccompletes the hash by incorpoating a trailing &#8216;1&#8217;, padding, and the length of the message. On return of this function the array passed as teh first argument holds the hash.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hash</strong> &#8211; an array of integers in which the hash is returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256BlockBegin</p>
+<p>sha256BlockUpdate</p>
+</dd></dl>
+
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>An example program is shown below:</p>
+<div class="highlight-none"><div class="highlight"><pre>int main(void) {
+  unsigned int hash[8];
+  sha256BlockStart(hash);
+  sha256BlockUpdate(hash, &quot;Hello&quot;, 5);
+  sha256BlockEnd(hash);
+  return 0;
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" id='d2'>
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Cryptography Component (0v1)</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">SHA256 with function calls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+
+    <div class="footer">
+    </div>
+  </body>
+</html>
+
+
+
