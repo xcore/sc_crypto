@@ -119,6 +119,7 @@ void sha256BlockBegin(unsigned int hash[8]) {
     blockCount = 0;
 }
 
+// TODO (opt) if the arrays are aligned then it should copy word-by-word
 #pragma unsafe arrays
 void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
     for(int i = 0; i < n; i++) {
@@ -129,6 +130,7 @@ void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
     }
 }
 
+// TODO (opt) zeros should be copied in per word
 #pragma unsafe arrays
 void sha256BlockEnd(unsigned int hash[8]) {
     int len = blockCount * 8;
@@ -159,6 +161,7 @@ void sha256Begin(streaming chanend c) {
     byteCnt = 0;
 }
 
+// TODO (opt) depending on the alignment byterevved words should be out.
 #pragma unsafe arrays
 void sha256Update(streaming chanend c, unsigned char bytes[], int n) {
     for(int i = 0; i < n; i++) {
@@ -167,6 +170,7 @@ void sha256Update(streaming chanend c, unsigned char bytes[], int n) {
     byteCnt += n;
 }
 
+// TODO (opt) depending on the alignment zeroes should be out.
 #pragma unsafe arrays
 void sha256End(streaming chanend c, unsigned int hash[8]) {
     int len = byteCnt * 8;
