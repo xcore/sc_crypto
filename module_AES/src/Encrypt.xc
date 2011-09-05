@@ -50,7 +50,7 @@ void _Encrypt(unsigned int plainText[], unsigned int w[], unsigned int cipherTex
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma unsafe arrays
-void Encrypt(unsigned int plainText[], unsigned int key[], unsigned int cipherText[]){
+void AESEncrypt(unsigned int plainText[], unsigned int key[], unsigned int cipherText[]){
 	
 	unsigned int w[Nb * (Nr + 1)];
 	

@@ -47,7 +47,7 @@ void _Decrypt(unsigned int cipherText[], unsigned int dw[], unsigned int decrypt
 	return;
 }
 
-void Decrypt(unsigned int cipherText[], unsigned int key[], unsigned int decryptedText[]){
+void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decryptedText[]){
 	
 	unsigned int w[Nb * (Nr + 1)];
 	

@@ -20,7 +20,6 @@
 #pragma unsafe arrays
 void KeyExpansion(unsigned int key[], unsigned int w[]){
 	
-	unsigned int i;
 	unsigned int t;
 	unsigned int temp;
 	

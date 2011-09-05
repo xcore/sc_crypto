@@ -10,7 +10,7 @@ unsigned char enc[16] = { 0x72, 0x88, 0xee, 0xcb, 0x76, 0x7f, 0xa0, 0xcc,
 main() {
     char message[17] = "Hello0123456789.";
     char output[16];
-    Encrypt((message, unsigned int[4]), (key, unsigned int[4]), (output, unsigned int[4]));
+    AESEncrypt((message, unsigned int[4]), (key, unsigned int[4]), (output, unsigned int[4]));
     for(int i =0; i < 16; i++) {
         printf("%02x ", output[i]);
     }
@@ -18,7 +18,7 @@ main() {
     for(int i =0; i < 16; i++) {
         printf("%02x ", enc[i]);
     }
-    Decrypt((enc, unsigned int[4]), (key, unsigned int[4]), (output, unsigned int[4]));
+    AESDecrypt((enc, unsigned int[4]), (key, unsigned int[4]), (output, unsigned int[4]));
     printf("\n");
     for(int i =0; i < 16; i++) {
         printf("%02x ", output[i]);

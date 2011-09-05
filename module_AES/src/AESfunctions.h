@@ -38,7 +38,7 @@ void _Encrypt(unsigned int plainText[], unsigned int w[], unsigned int cipherTex
  * \param key        array of integers holding the key
  * \param cipherText array of integers where the encrypted message is stored
  **/
-void Encrypt(unsigned int plainText[], unsigned int key[], unsigned int cipherText[]);
+void AESEncrypt(unsigned int plainText[], unsigned int key[], unsigned int cipherText[]);
 
 void _Decrypt(unsigned int cipherText[], unsigned int w[], unsigned int decipheredText[]);
 
@@ -49,7 +49,7 @@ void _Decrypt(unsigned int cipherText[], unsigned int w[], unsigned int decipher
  * \param key        array of integers holding the key
  * \param plainText  array of integers where the decrypted message is stored
  **/
-void Decrypt(unsigned int cipherText[], unsigned int key[], unsigned int decipheredText[]);
+void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decipheredText[]);
 
 
 //this is the KeyExpansion functions...
