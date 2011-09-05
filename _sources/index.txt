@@ -15,6 +15,7 @@ by judicious use of word vs byte manipulation instructions.
 
    api-sha256-process.rst
    api-sha256-function.rst
+   api-aes.rst
 
 
 

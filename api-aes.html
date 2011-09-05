@@ -23,7 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
     <script type="text/javascript" src="_static/xcomment.js"></script>
-    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" /> 
+    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="prev" title="SHA256 with function calls" href="api-sha256-function.html" /> 
 
 <script>
 function setheight() {
@@ -50,6 +51,8 @@ document.getElementById('d1').style.height=h2 + "px";
         <div class="bodywrapper">
           <div class="body">
 <div style="float: right">
+<a href="api-sha256-function.html"
+                        title="previous chapter"> &lt&lt </a>
 </div>
 
             
@@ -57,14 +60,46 @@ document.getElementById('d1').style.height=h2 + "px";
 <h1>AES<a class="headerlink" href="#aes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function &#8220;AESEncrypt&#8221; in doxygen xml output</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function &#8220;AESDecrypt&#8221; in doxygen xml output</p>
-</div>
+<dt><dl class="function">
+<dt id="AESEncrypt">
+void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function encrypts a piece of plaintext into a piece of ciphertext, given a key.</p>
+<p>All are supplied as arrays of integers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>plainText</strong> &#8211; array of integers holding the input message</li>
+<li><strong>key</strong> &#8211; array of integers holding the key</li>
+<li><strong>cipherText</strong> &#8211; array of integers where the encrypted message is stored</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="AESDecrypt">
+void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function encrypts a piece of plaintext into a piece of ciphertext, given a key.</p>
+<p>All are supplied as arrays of integers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cipherText</strong> &#8211; array of integers holding the encrypted input message</li>
+<li><strong>key</strong> &#8211; array of integers holding the key</li>
+<li><strong>decipheredText</strong> &#8211; array of integers where the decrypted message is stored</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
@@ -90,9 +125,14 @@ main() {
       <div class="sphinxsidebar" id='d2'>
         <div class="sphinxsidebarwrapper">
 <h3><a href="index.html">Cryptography Component (0v1)</a></h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">AES</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">
