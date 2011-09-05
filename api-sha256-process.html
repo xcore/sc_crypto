@@ -97,11 +97,6 @@ void <tt class="descname">sha256Process</tt><big>(</big>streaming chanend<em>&nb
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256Begin</p>
-<p>sha256Update</p>
-<p>sha256End</p>
-<p>sha256Terminate</p>
 </dd></dl>
 
 <dt><dl class="function">
@@ -120,10 +115,6 @@ void <tt class="descname">sha256Begin</tt><big>(</big>streaming chanend<em>&nbsp
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256Process</p>
-<p>sha256Update</p>
-<p>sha256End</p>
 </dd></dl>
 
 <dt><dl class="function">
@@ -137,16 +128,13 @@ void <tt class="descname">sha256Update</tt><big>(</big>streaming chanend<em>&nbs
 <tbody valign="top">
 <tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
-<li><strong>message</strong> &#8211; An array of bytes that contains the data to be incorporated into the hashfunction</li>
+<li><strong>message</strong> &#8211; An array of bytes that contains the data to be incorporated into the hash-function</li>
 <li><strong>n</strong> &#8211; The number of bytes to be incorporated.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256Begin</p>
-<p>sha256End</p>
 </dd></dl>
 
 <dt><dl class="function">
@@ -166,8 +154,6 @@ void <tt class="descname">sha256End</tt><big>(</big>streaming chanend<em>&nbsp;c
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256Begin</p>
 </dd></dl>
 
 <dt><dl class="function">
@@ -186,9 +172,6 @@ void <tt class="descname">sha256Terminate</tt><big>(</big>streaming chanend<em>&
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256Process</p>
-<p>sha256End</p>
 </dd></dl>
 
 </div>
@@ -197,7 +180,7 @@ void <tt class="descname">sha256Terminate</tt><big>(</big>streaming chanend<em>&
 <p>An example program is shown below:</p>
 <div class="highlight-none"><div class="highlight"><pre>void comp(streaming chanend c) {
   unsigned int hash[8];
-  sha256Start(c);
+  sha256Begin(c);
   sha256Update(c, &quot;Hello&quot;, 5);
   sha256End(c, hash);
   sha256Terminate(c);
@@ -231,6 +214,10 @@ int main(void) {
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html#example">Example</a></li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">

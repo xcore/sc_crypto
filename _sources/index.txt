@@ -17,7 +17,7 @@ by judicious use of word vs byte manipulation instructions.
    api-sha256-function.rst
 
 AES user guide
-''''''''''''''''''
+''''''''''''''
 
 AES (Rijndael) encryption and decryption is performed using the functions
 below. Typically, a key is first expanded using the appropriate function
