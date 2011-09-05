@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>AES &mdash; Cryptography Component v0v1 documentation</title>
+    <title>API &mdash; Cryptography Component v0v1 documentation</title>
     <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -56,10 +56,8 @@ document.getElementById('d1').style.height=h2 + "px";
 </div>
 
             
-  <div class="section" id="aes">
-<h1>AES<a class="headerlink" href="#aes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="api">
-<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
 <dt><dl class="function">
 <dt id="AESEncryptBlock">
 void <tt class="descname">AESEncryptBlock</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncryptBlock" title="Permalink to this definition">¶</a></dt>
@@ -178,7 +176,7 @@ void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;ciphe
 
 </div>
 <div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
 <p>An example program is shown below:</p>
 <div class="highlight-none"><div class="highlight"><pre>unsigned int plain[4] = {1,2,3,4};
 unsigned int key[4] = {12314241,4367465,1231244,1234569};
@@ -191,7 +189,6 @@ main() {
 </pre></div>
 </div>
 </div>
-</div>
 
 
 
@@ -201,14 +198,13 @@ main() {
       <div class="sphinxsidebar" id='d2'>
         <div class="sphinxsidebarwrapper">
 <h3><a href="index.html">Cryptography Component (0v1)</a></h3>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">AES</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
 </ul>
-</li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">
