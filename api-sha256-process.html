@@ -1,0 +1,258 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SHA256 with a server thread &mdash; Cryptography Component v0v1 documentation</title>
+    <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0v1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
+    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="next" title="SHA256 with function calls" href="api-sha256-function.html" />
+    <link rel="prev" title="sha 256 user guide" href="index.html" /> 
+
+<script>
+function setheight() {
+h1 = document.getElementById('d1').style.height;
+h2 = document.getElementById('d2').style.height;
+
+if (parseInt(h1) > parseInt(h2)) {
+document.getElementById('d2').style.height=h1 + "px";
+}
+else {
+document.getElementById('d1').style.height=h2 + "px";
+}
+
+}
+</script>
+</head>
+
+<body onload="setheight();">
+
+  
+
+    <div class="document" id='d1'>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+<div style="float: right">
+<a href="index.html"
+                        title="previous chapter"> &lt&lt </a>
+<a href="api-sha256-function.html"
+                        title="next chapter"> &gt&gt </a></p>
+</div>
+
+            
+  <div class="section" id="sha256-with-a-server-thread">
+<h1>SHA256 with a server thread<a class="headerlink" href="#sha256-with-a-server-thread" title="Permalink to this headline">¶</a></h1>
+<p>The current SHA256 implementation consists of two parts: a process that
+computes the sha256 hash, and four function calls that can be used
+to supply data to the hashing process.</p>
+<p>In a par call the <tt class="docutils literal"><span class="pre">sha256Process()</span></tt> function, then in another thread
+call the function <tt class="docutils literal"><span class="pre">sha256Begin()</span></tt> to start computing a new hash, the
+function <tt class="docutils literal"><span class="pre">sha256Update()</span></tt> to incorporate some more data into the hash, the
+function <tt class="docutils literal"><span class="pre">sha256End()</span></tt> to obtain the hash, and the
+function <tt class="docutils literal"><span class="pre">sha256Terminate()</span></tt> to stop the hashing process when you are
+done computing hashes.</p>
+<p>The rationale for doing the computations in a separate thread is that it
+keeps the state in that thread, slightly speeding up computation.</p>
+<p>Note that the current interface can only perform the computation on a byte
+stream. This can be changed to a bit stream, the hashing thread
+itself works on a bit stream already, it just requires a different set of
+functions.</p>
+<p>The two threads communicate by means of a streaming channel; optimised for
+computation on a single core.</p>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<dt><dl class="function">
+<dt id="sha256Process">
+void <tt class="descname">sha256Process</tt><big>(</big>streaming chanend<em>&nbsp;c</em><big>)</big><a class="headerlink" href="#sha256Process" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is the SHA256 encryption server.</p>
+<p>When ready to encrypt data it transmit a single control token over the channel end, and it then reads bytes over the channel. It assumes that the number of bytes supplied is a multiple of 64, and that the trailing &#8216;1&#8217; bit and the length are encoded as defined by the SHA256 standard. At the end of the packet, a single control token must be sent over the channel, whereupon the hash is supplied back over the channel end, terminated by an end-of-message.</p>
+<p>To make it easier to use this process, four auxiliary functions are supplied that handle the trailing bit, the length, and the channel communication.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; A streaming chanend that connects this server thread to the client.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256Begin</p>
+<p>sha256Update</p>
+<p>sha256End</p>
+<p>sha256Terminate</p>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="sha256Begin">
+void <tt class="descname">sha256Begin</tt><big>(</big>streaming chanend<em>&nbsp;c</em><big>)</big><a class="headerlink" href="#sha256Begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><tt class="xref c c-func docutils literal"><span class="pre">sha256Process()</span></tt></a>.</p>
+<p>It must be called to initialise the hashing process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256Process</p>
+<p>sha256Update</p>
+<p>sha256End</p>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="sha256Update">
+void <tt class="descname">sha256Update</tt><big>(</big>streaming chanend<em>&nbsp;c</em>, unsigned char<em>&nbsp;message[]</em>, int<em>&nbsp;n</em><big>)</big><a class="headerlink" href="#sha256Update" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><tt class="xref c c-func docutils literal"><span class="pre">sha256Process()</span></tt></a>.</p>
+<p>It is used to incorporate a block of data into the hash. This function must be called after the hash has been initialised with <a class="reference internal" href="#sha256Begin" title="sha256Begin"><tt class="xref c c-func docutils literal"><span class="pre">sha256Begin()</span></tt></a>. It can be called multiple times, to add multiple blocks of data. Blocks can be an arbitrary number of bytes long.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
+<li><strong>message</strong> &#8211; An array of bytes that contains the data to be incorporated into the hashfunction</li>
+<li><strong>n</strong> &#8211; The number of bytes to be incorporated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256Begin</p>
+<p>sha256End</p>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="sha256End">
+void <tt class="descname">sha256End</tt><big>(</big>streaming chanend<em>&nbsp;c</em>, unsigned int<em>&nbsp;hash[8]</em><big>)</big><a class="headerlink" href="#sha256End" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><tt class="xref c c-func docutils literal"><span class="pre">sha256Process()</span></tt></a>.</p>
+<p>It adds the length into the hash, and retrieves the hash.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
+<li><strong>hash</strong> &#8211; An array of words in which the hash will be written.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256Begin</p>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="sha256Terminate">
+void <tt class="descname">sha256Terminate</tt><big>(</big>streaming chanend<em>&nbsp;c</em><big>)</big><a class="headerlink" href="#sha256Terminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><tt class="xref c c-func docutils literal"><span class="pre">sha256Process()</span></tt></a>.</p>
+<p>It requests the hash thread to terminate, and should only be called after <a class="reference internal" href="#sha256End" title="sha256End"><tt class="xref c c-func docutils literal"><span class="pre">sha256End()</span></tt></a> has been called. After this call, sha256Process will return.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>See also:</strong></p>
+<p>sha256Process</p>
+<p>sha256End</p>
+</dd></dl>
+
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>An example program is shown below:</p>
+<div class="highlight-none"><div class="highlight"><pre>void comp(streaming chanend c) {
+  unsigned int hash[8];
+  sha256Start(c);
+  sha256Update(c, &quot;Hello&quot;, 5);
+  sha256End(c, hash);
+  sha256Terminate(c);
+}
+
+int main(void) {
+  streaming chan c;
+  par {
+    sha256Process(c);
+    comp(c);
+  }
+  return 0;
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" id='d2'>
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Cryptography Component (0v1)</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">SHA256 with a server thread</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+
+    <div class="footer">
+    </div>
+  </body>
+</html>
+
+
+
