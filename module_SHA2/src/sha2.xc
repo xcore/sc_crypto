@@ -130,7 +130,6 @@ void sha256BlockUpdate(unsigned int hash[8], unsigned char bytes[], int n) {
     }
 }
 
-// TODO (opt) zeros should be copied in per word
 #pragma unsafe arrays
 void sha256BlockEnd(unsigned int hash[8]) {
     int len = blockCount * 8;
@@ -146,8 +145,12 @@ void sha256BlockEnd(unsigned int hash[8]) {
         sha256Block(hash, blockData);
         blockCount = 0;
     }
-    while(blockCount < 56) {
+    while(blockCount&3) {
         (blockData, unsigned char[64])[blockCount++] = 0;
+    }
+    blockCount >>= 2;
+    while(blockCount < 15) {
+        blockData[blockCount++] = 0;
     }
     blockData[14] = 0;
     blockData[15] = byterev(len);
@@ -170,7 +173,6 @@ void sha256Update(streaming chanend c, unsigned char bytes[], int n) {
     byteCnt += n;
 }
 
-// TODO (opt) depending on the alignment zeroes should be out.
 #pragma unsafe arrays
 void sha256End(streaming chanend c, unsigned int hash[8]) {
     int len = byteCnt * 8;
@@ -184,9 +186,13 @@ void sha256End(streaming chanend c, unsigned int hash[8]) {
         }
         byteCnt = 0;
     }
-    while(byteCnt < 56) {
+    while(byteCnt&3) {
         c <: (unsigned char) 0;
         byteCnt++;
+    }
+    while(byteCnt < 56) {
+        c <: (unsigned int) 0;
+        byteCnt+=4;
     }
     c <: (unsigned int) 0;
     c <: (unsigned int) len;
