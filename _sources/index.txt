@@ -1,3 +1,6 @@
+Documentation
+-------------
+
 sha 256 user guide
 ''''''''''''''''''
 
