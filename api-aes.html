@@ -61,10 +61,48 @@ document.getElementById('d1').style.height=h2 + "px";
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dt><dl class="function">
+<dt id="AESEncryptBlock">
+void <tt class="descname">AESEncryptBlock</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncryptBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function encrypts a block of plaintext into a block of ciphertext, given an expanded key.</p>
+<p>Use <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptExpandKey()</span></tt></a> to expand a 128-bit key. All are supplied as arrays of integers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>plainText</strong> &#8211; array of integers holding the input message</li>
+<li><strong>expanded</strong> &#8211; array of integers holding the expanded key</li>
+<li><strong>cipherText</strong> &#8211; array of integers where the encrypted message is stored</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="AESEncryptExpandKey">
+void <tt class="descname">AESEncryptExpandKey</tt><big>(</big>unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;expanded[]</em><big>)</big><a class="headerlink" href="#AESEncryptExpandKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function expands a 128-bit key into a format suitable for efficient encryption The output array needs to be at least 44 (that is Nb*(Nr+1)) words long.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> &#8211; array of integers holding the key</li>
+<li><strong>expanded</strong> &#8211; array of integers where the expanded key is stored</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dt><dl class="function">
 <dt id="AESEncrypt">
 void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncrypt" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function encrypts a piece of plaintext into a piece of ciphertext, given a key.</p>
-<p>All are supplied as arrays of integers.</p>
+<dd><p>This function encrypts a block of plaintext into a block of ciphertext, given a key.</p>
+<p>All are supplied as arrays of integers. Calling this function is equivalent to first calling <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptExpandKey()</span></tt></a> and then <a class="reference internal" href="#AESEncryptBlock" title="AESEncryptBlock"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptBlock()</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -81,10 +119,48 @@ void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plain
 </dd></dl>
 
 <dt><dl class="function">
+<dt id="AESDecryptBlock">
+void <tt class="descname">AESDecryptBlock</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecryptBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function encrypts a block of plaintext into a block of ciphertext, given an expanded key.</p>
+<p>Use <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptExpandKey()</span></tt></a> to expand a 128-bit key. All are supplied as arrays of integers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cipherText</strong> &#8211; array of integers holding the encrypted input message</li>
+<li><strong>expanded</strong> &#8211; array of integers holding the expanded key</li>
+<li><strong>decipheredText</strong> &#8211; array of integers where the decrypted message is stored</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dt><dl class="function">
+<dt id="AESDecryptExpandKey">
+void <tt class="descname">AESDecryptExpandKey</tt><big>(</big>unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;expanded[]</em><big>)</big><a class="headerlink" href="#AESDecryptExpandKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function expands a 128-bit key into a format suitable for efficient decryption The output array needs to be at least 44 (that is Nb*(Nr+1)) words long.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> &#8211; array of integers holding the key</li>
+<li><strong>expanded</strong> &#8211; array of integers where the expanded key is stored</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dt><dl class="function">
 <dt id="AESDecrypt">
 void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecrypt" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function encrypts a piece of plaintext into a piece of ciphertext, given a key.</p>
-<p>All are supplied as arrays of integers.</p>
+<dd><p>This function encrypts a block of plaintext into a block of ciphertext, given a key.</p>
+<p>All are supplied as arrays of integers. Calling this function is equivalent to first calling <a class="reference internal" href="#AESDecryptExpandKey" title="AESDecryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESDecryptExpandKey()</span></tt></a> and then <a class="reference internal" href="#AESDecryptBlock" title="AESDecryptBlock"><tt class="xref c c-func docutils literal"><span class="pre">AESDecryptBlock()</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
