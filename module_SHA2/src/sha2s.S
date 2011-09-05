@@ -1,3 +1,8 @@
+// Copyright (c) 2011, XMOS Ltd, All rights reserved
+// This software is freely distributable under a derivative of the
+// University of Illinois/NCSA Open Source License posted in
+// LICENSE.txt and at <http://github.xcore.com/>
+
 /*
     for(i = 0; i < 64; i++) {
         sigma0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
