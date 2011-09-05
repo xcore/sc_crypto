@@ -1,12 +1,16 @@
-AES
----
-
-
 
 API
 ===
 
+.. doxygenfunction:: AESEncryptBlock
+
+.. doxygenfunction:: AESEncryptExpandKey
+
 .. doxygenfunction:: AESEncrypt
+
+.. doxygenfunction:: AESDecryptBlock
+
+.. doxygenfunction:: AESDecryptExpandKey
 
 .. doxygenfunction:: AESDecrypt
 

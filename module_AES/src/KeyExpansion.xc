@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //the total number of Round Key bits is equal to the block length multiplied by the number of rounds plus1.
 #pragma unsafe arrays
-void KeyExpansion(unsigned int key[], unsigned int w[]){
+void AESEncryptExpandKey(unsigned int key[], unsigned int w[]){
 	
 	unsigned int t;
 	unsigned int temp;

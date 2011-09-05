@@ -46,7 +46,7 @@ An example program is shown below::
 
   void comp(streaming chanend c) {
     unsigned int hash[8];
-    sha256Start(c);
+    sha256Begin(c);
     sha256Update(c, "Hello", 5);
     sha256End(c, hash);
     sha256Terminate(c);

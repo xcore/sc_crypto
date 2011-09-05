@@ -29,10 +29,33 @@
                                     //for key length of 128, 192, and 256 respectively
 
 
-void _Encrypt(unsigned int plainText[], unsigned int w[], unsigned int cipherText[]);
 
-/** This function encrypts a piece of plaintext into a piece of ciphertext,
- * given a key. All are supplied as arrays of integers.
+/** This function encrypts a block of plaintext into a block of ciphertext,
+ * given an expanded key. Use AESEncryptExpandKey() to expand a 128-bit key.
+ * All are supplied as arrays of integers.
+ *
+ * \param plainText  array of integers holding the input message
+ * \param expanded   array of integers holding the expanded key
+ * \param cipherText array of integers where the encrypted message is stored
+ *
+ * \sa AESEncryptExpandKey
+ **/
+void AESEncryptBlock(unsigned int plainText[], unsigned int expanded[], unsigned int cipherText[]);
+
+/** This function expands a 128-bit key into a format suitable for efficient encryption
+ * The output array needs to be at least 44 (that is Nb*(Nr+1)) words long
+ *
+ * \param key        array of integers holding the key
+ * \param expanded   array of integers where the expanded key is stored
+ *
+ * \sa AESEncryptBlock
+ **/
+void AESEncryptExpandKey(unsigned int key[], unsigned int expanded[]);
+
+/** This function encrypts a block of plaintext into a block of ciphertext,
+ * given a key. All are supplied as arrays of integers. Calling this
+ * function is equivalent to first calling AESEncryptExpandKey() and then
+ * AESEncryptBlock().
  *
  * \param plainText  array of integers holding the input message
  * \param key        array of integers holding the key
@@ -40,21 +63,38 @@ void _Encrypt(unsigned int plainText[], unsigned int w[], unsigned int cipherTex
  **/
 void AESEncrypt(unsigned int plainText[], unsigned int key[], unsigned int cipherText[]);
 
-void _Decrypt(unsigned int cipherText[], unsigned int w[], unsigned int decipheredText[]);
-
-/** This function encrypts a piece of plaintext into a piece of ciphertext,
- * given a key. All are supplied as arrays of integers.
+/** This function encrypts a block of plaintext into a block of ciphertext,
+ * given an expanded key. Use AESEncryptExpandKey() to expand a 128-bit key.
+ * All are supplied as arrays of integers.
  *
- * \param cipherText array of integers holding the encrypted input message
+ * \param cipherText      array of integers holding the encrypted input message
+ * \param expanded        array of integers holding the expanded key
+ * \param decipheredText  array of integers where the decrypted message is stored
+ *
+ * \sa AESDecryptExpandKey
+ **/
+void AESDecryptBlock(unsigned int cipherText[], unsigned int expanded[], unsigned int decipheredText[]);
+
+/** This function expands a 128-bit key into a format suitable for efficient decryption
+ * The output array needs to be at least 44 (that is Nb*(Nr+1)) words long
+ *
  * \param key        array of integers holding the key
- * \param plainText  array of integers where the decrypted message is stored
+ * \param expanded   array of integers where the expanded key is stored
+ *
+ * \sa AESDecryptBlock
+ **/
+void AESDecryptExpandKey(unsigned int key[], unsigned int expanded[]);
+
+/** This function encrypts a block of plaintext into a block of ciphertext,
+ * given a key. All are supplied as arrays of integers. Calling this
+ * function is equivalent to first calling AESDecryptExpandKey() and then
+ * AESDecryptBlock().
+ *
+ * \param cipherText      array of integers holding the encrypted input message
+ * \param key             array of integers holding the key
+ * \param decipheredText  array of integers where the decrypted message is stored
  **/
 void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decipheredText[]);
-
-
-//this is the KeyExpansion functions...
-void KeyExpansion(unsigned int key[], unsigned int w[]);
-void InvKeyExpansion(unsigned int key[], unsigned int w[]);
 
 
 #endif //ifndef AESfunctions_h

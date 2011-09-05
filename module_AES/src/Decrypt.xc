@@ -16,7 +16,7 @@
 
 #include "AESincludes.h"
 #pragma unsafe arrays
-void _Decrypt(unsigned int cipherText[], unsigned int dw[], unsigned int decryptedText[]) {
+void AESDecryptBlock(unsigned int cipherText[], unsigned int dw[], unsigned int decryptedText[]) {
 	unsigned int laststate0, laststate1, laststate2, laststate3;
 	unsigned int state0, state1, state2, state3;
 	
@@ -51,8 +51,8 @@ void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decr
 	
 	unsigned int w[Nb * (Nr + 1)];
 	
-	InvKeyExpansion(key, w);
-	_Decrypt(cipherText, w, decryptedText);
+	AESDecryptExpandKey(key, w);
+	AESDecryptBlock(cipherText, w, decryptedText);
 }
 #endif
 

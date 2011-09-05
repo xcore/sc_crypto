@@ -48,7 +48,7 @@ void sha256Begin(streaming chanend c);
  * \param c       A streaming chanend that must be connected to the server
  *                thread.
  * \param message An array of bytes that contains the data to be incorporated
- *                into the hashfunction
+ *                into the hash-function
  * \param n       The number of bytes to be incorporated.
  * 
  * \sa sha256Begin
@@ -107,9 +107,9 @@ void sha256BlockBegin(unsigned int hash[8]);
 void sha256BlockUpdate(unsigned int hash[8], unsigned char message[], int n);
 
 /** This is one of three functions that comprise the function based
- * interface to the SHA256 library. It is ccompletes the hash by
- * incorpoating a trailing '1', padding, and the length of the message. On
- * return of this function the array passed as teh first argument holds the
+ * interface to the SHA256 library. It completes the hash by
+ * incorporating a trailing '1', padding, and the length of the message. On
+ * return of this function the array passed as the first argument holds the
  * hash.
  *
  * \param hash    an array of integers in which the hash is returned.

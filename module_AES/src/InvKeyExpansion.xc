@@ -17,10 +17,10 @@
 
 #include "AESincludes.h"
 #pragma unsafe arrays
-void InvKeyExpansion(unsigned int key[], unsigned int w[]){
+void AESDecryptExpandKey(unsigned int key[], unsigned int w[]){
         int i;
 	
-	KeyExpansion(key, w);
+	AESEncryptExpandKey(key, w);
 	
 	#pragma loop unroll(36)
 	for(i = 4; i < Nb * Nr; i++){
