@@ -14,11 +14,11 @@ Key Features
 ============
 
 * Speed optimised SHA2
+* AES
 
 To Do
 =====
 
-* AES
 * RSA
 
 Firmware Overview
@@ -27,7 +27,9 @@ Firmware Overview
 This repo intends to contain modules implementing various standard crypto
 algorithms for decryption, encryption and hashing.
 
-At present - only SHA256 is implemented. The core of the algorithm has been
+At present - only AES and SHA256 are implemented.
+
+The core of SHA256 has been
 hand-optimised and is encoded in assembly. On the fringe there are two
 interfaces (one with a server thread that does the hashing, and one where
 the hashing happens in the calling thread); there is some waste in the
