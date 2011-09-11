@@ -1,1 +1,2 @@
 MODULE_XCC_FLAGS = $(XCC_FLAGS) -O3
+XCC_FLAGS_DecryptAsm.S = $(XCC_FLAGS) -fschedule

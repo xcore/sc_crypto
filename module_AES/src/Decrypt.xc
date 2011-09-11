@@ -13,6 +13,9 @@
  */
 
 #include "AESincludes.h"
+#include "AESConfig.h"
+
+#ifndef AES_USE_ASSEMBLY
 #pragma unsafe arrays
 void AESDecryptBlock(unsigned int cipherText[], unsigned int dw[], unsigned int decryptedText[]) {
 	unsigned int laststate0, laststate1, laststate2, laststate3;
@@ -44,6 +47,7 @@ void AESDecryptBlock(unsigned int cipherText[], unsigned int dw[], unsigned int 
 	decryptedText[3] = sBoxInv[(state3 << 24) >> 24] ^ (sBoxInv[(state2 << 16) >> 24] << 8) ^ (sBoxInv[(state1 << 8) >> 24] << 16) ^ (sBoxInv[state0 >> 24] << 24) ^ dw[3];
 	return;
 }
+#endif //AES_USE_ASSEMBLY
 
 void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decryptedText[]){
 	unsigned int w[Nb * (Nr + 1)];
