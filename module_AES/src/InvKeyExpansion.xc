@@ -22,7 +22,7 @@ void AESDecryptExpandKey(unsigned int key[], unsigned int w[]){
 	
 	AESEncryptExpandKey(key, w);
 	
-	#pragma loop unroll(36)
+	#pragma loop unroll
 	for(i = 4; i < Nb * Nr; i++){
 		//InvMixColumn for each key except for the first and final round
 		w[i] = M0[(w[i] << 24) >> 24] ^ M1[(w[i] << 16) >> 24] ^ M2[(w[i] << 8) >> 24] ^ M3[w[i] >> 24];

@@ -28,7 +28,7 @@ void AESEncryptExpandKey(unsigned int key[], unsigned int w[]){
 	w[2] = key[2];
 	w[3] = key[3];
 	
-	#pragma loop unroll(10)
+	#pragma loop unroll
 	for(t = 1; t < 11U; t++){//loop limit = Nb * (Nr + 1)
 		temp = w[t*4 - 1];
 		//barrel shift

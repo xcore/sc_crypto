@@ -27,7 +27,7 @@ void AESDecryptBlock(unsigned int cipherText[], unsigned int dw[], unsigned int 
 	state3 = cipherText[3] ^ dw[43];
         
 	// rounds 10 to 2
-	#pragma loop unroll(9)
+	#pragma loop unroll
 	for (unsigned i = 10; i >= 2; i--) {
 		laststate0 = state0;
 		laststate1 = state1;
