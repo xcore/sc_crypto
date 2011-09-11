@@ -46,7 +46,6 @@ void AESDecryptBlock(unsigned int cipherText[], unsigned int dw[], unsigned int 
 }
 
 void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decryptedText[]){
-	
 	unsigned int w[Nb * (Nr + 1)];
 	
 	AESDecryptExpandKey(key, w);

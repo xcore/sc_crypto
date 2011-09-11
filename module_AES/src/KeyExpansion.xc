@@ -17,18 +17,18 @@
 //the total number of Round Key bits is equal to the block length multiplied by the number of rounds plus1.
 #pragma unsafe arrays
 void AESEncryptExpandKey(unsigned int key[], unsigned int w[]){
-	
-	unsigned int t;
-	unsigned int temp;
-	
+	static const unsigned char rCon[11] = {
+		0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
+	};
+
 	w[0] = key[0];
 	w[1] = key[1];
 	w[2] = key[2];
 	w[3] = key[3];
-	
+
 	#pragma loop unroll
-	for(t = 1; t < 11U; t++){//loop limit = Nb * (Nr + 1)
-		temp = w[t*4 - 1];
+	for(unsigned int t = 1; t < 11U; t++){//loop limit = Nb * (Nr + 1)
+		unsigned int temp = w[t*4 - 1];
 		//barrel shift
 		temp = (temp >> 8) | (temp << 24);
 		//sub word
@@ -42,6 +42,3 @@ void AESEncryptExpandKey(unsigned int key[], unsigned int w[]){
 	}
 	return;
 }
-unsigned char rCon[11] = {
-	0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
-};
