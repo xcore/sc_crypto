@@ -11,8 +11,6 @@
  *	Further hand crafted optimisations are implemented in the assembly version
  * See KeyExpansion.S for more details.
  */
-#ifndef _KEYEXPANSION
-#define _KEYEXPANSION
 
 #include "AESincludes.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +45,3 @@ void AESEncryptExpandKey(unsigned int key[], unsigned int w[]){
 unsigned char rCon[11] = {
 	0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36
 };
-	
-#endif
-

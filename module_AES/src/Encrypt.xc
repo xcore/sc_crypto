@@ -11,8 +11,6 @@
  * Further hand crafted optimisations are implemented in the assembly version
  * See Encrypt.S for more details.
  */
-#ifndef _ENCRYPT
-#define _ENCRYPT
 
 #include "AESincludes.h"
 #pragma unsafe arrays
@@ -59,5 +57,3 @@ void AESEncrypt(unsigned int plainText[], unsigned int key[], unsigned int ciphe
 	AESEncryptBlock(plainText, w, cipherText);
 	
 }
-#endif
-

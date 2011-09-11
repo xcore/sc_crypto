@@ -12,8 +12,6 @@
  * See InvKeyExpansion.S for more details.
  *
  */
-#ifndef _INVKEYEXPANSION
-#define _INVKEYEXPANSION
 
 #include "AESincludes.h"
 #pragma unsafe arrays
@@ -29,5 +27,3 @@ void AESDecryptExpandKey(unsigned int key[], unsigned int w[]){
 	}
 	return;
 }
-#endif
-
