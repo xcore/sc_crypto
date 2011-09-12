@@ -11,8 +11,6 @@
  * Further hand crafted optimisations are implemented in the assembly version
  * See Encrypt.S for more details.
  */
-#ifndef _ENCRYPT
-#define _ENCRYPT
 
 #include "AESincludes.h"
 #pragma unsafe arrays
@@ -27,7 +25,7 @@ void AESEncryptBlock(unsigned int plainText[], unsigned int w[], unsigned int ci
 	state3 = plainText[3] ^ w[3];
 	
 	//rounds 1 to 9
-	#pragma loop unroll(9)
+	#pragma loop unroll
 	for (int i = 1; i <= 9; i++) {
 		laststate0 = state0;
 		laststate1 = state1;
@@ -59,5 +57,3 @@ void AESEncrypt(unsigned int plainText[], unsigned int key[], unsigned int ciphe
 	AESEncryptBlock(plainText, w, cipherText);
 	
 }
-#endif
-
