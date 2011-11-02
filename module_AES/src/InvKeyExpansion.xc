@@ -12,22 +12,16 @@
  * See InvKeyExpansion.S for more details.
  *
  */
-#ifndef _INVKEYEXPANSION
-#define _INVKEYEXPANSION
 
 #include "AESincludes.h"
 #pragma unsafe arrays
 void AESDecryptExpandKey(unsigned int key[], unsigned int w[]){
-        int i;
-	
 	AESEncryptExpandKey(key, w);
 	
-	#pragma loop unroll(36)
-	for(i = 4; i < Nb * Nr; i++){
+	#pragma loop unroll
+	for(int i = 4; i < Nb * Nr; i++){
 		//InvMixColumn for each key except for the first and final round
 		w[i] = M0[(w[i] << 24) >> 24] ^ M1[(w[i] << 16) >> 24] ^ M2[(w[i] << 8) >> 24] ^ M3[w[i] >> 24];
 	}
 	return;
 }
-#endif
-
