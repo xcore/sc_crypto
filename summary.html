@@ -107,10 +107,13 @@ follows (assuming 8 threads on a 400 MHz part - or 50 MIPS threads):</p>
 </tr>
 </tbody>
 </table>
-<p>Note that decryption has been severely optimised - encryption can possibly
-be optimised further.</p>
-<p>Both require the key to be expanded once, and then decrypt a large number
-of blocks.</p>
+<p>Note that decryption has been severely optimised - encryption can probably be
+optimised to a similar level. Multiple blocks that have the same key can be
+decrypted in parallel in multiple threads with only marginal extra memory
+requirements. Encryption in parallel is only feasible if there is no
+chaining between subsequent blocks.</p>
+<p>In order to achieve the data rate given above, key must be expanded once,
+prior to decrypting a large number of blocks.</p>
 </div>
 <div class="section" id="module-sha2">
 <h2>module_SHA2<a class="headerlink" href="#module-sha2" title="Permalink to this headline">¶</a></h2>
