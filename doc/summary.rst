@@ -32,11 +32,14 @@ follows (assuming 8 threads on a 400 MHz part - or 50 MIPS threads):
 | Decryption    | 128 bit   | 9.1 Mbit/s | 13K    | Implemented and tested |
 +---------------+-----------+------------+--------+------------------------+
 
-Note that decryption has been severely optimised - encryption can possibly
-be optimised further.
+Note that decryption has been severely optimised - encryption can probably be
+optimised to a similar level. Multiple blocks that have the same key can be
+decrypted in parallel in multiple threads with only marginal extra memory
+requirements. Encryption in parallel is only feasible if there is no
+chaining between subsequent blocks.
 
-Both require the key to be expanded once, and then decrypt a large number
-of blocks.
+In order to achieve the data rate given above, key must be expanded once,
+prior to decrypting a large number of blocks.
 
 module_SHA2
 -----------
