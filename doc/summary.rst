@@ -21,8 +21,8 @@ The most important characteristics are the following:
 module_AES
 ----------
 
-A single thread can encrypt and decrypt data as follows (assuming 8 threads
-on a 400 MHz part - or 50 MIPS threads):
+A function running inside a single thread can encrypt and decrypt data as
+follows (assuming 8 threads on a 400 MHz part - or 50 MIPS threads):
 
 +---------------+-----------+------------+--------+------------------------+
 | Functionality | Key size  | Data rate  | Memory | Status                 |
@@ -35,6 +35,24 @@ on a 400 MHz part - or 50 MIPS threads):
 Note that encryption has been severely optimised - decryption can possibly
 be optimised further.
 
+Both require the key to be expanded once, and then decrypt a large number
+of blocks.
+
 module_SHA2
 -----------
+
+The SHA2 module has two interfaces: one that is a function call from within
+a single thread, and one that requires a separate thread to do the
+groundwork, which acts as a server. The performance is as follows:
+(assuming 8 threads on a 400 MHz part - or 50 MIPS threads):
+
++-----------------+-----------+------------+--------+-------------+
+| Functionality   | Hash size | Data rate  | Memory | Status      |
++-----------------+-----------+------------+--------+-------------+
+| Block based     | 256 bit   | 3.5 Mbit/s | 4.5K   | Implemented |
++-----------------+-----------+------------+--------+-------------+
+| Separate thread | 256 bit   | 4.0 Mbit/s | 4.5K   | Implemented |
++-----------------+-----------+------------+--------+-------------+
+
+
 

@@ -45,7 +45,7 @@ int main(void) {
                 for(int i = 0; i < 8; i++) {
                     printf("%08x", hash[i]);
                 }
-                printf(" %d\n", t3-t2);
+                printf(" %d ticks for %d bytes\n", t3-t2, tests[j].n);
 
                 t :> t2;
                 sha256BlockBegin(hash);
@@ -55,7 +55,7 @@ int main(void) {
                 for(int i = 0; i < 8; i++) {
                     printf("%08x", hash[i]);
                 }
-                printf(" %d\n", t3-t2);
+                printf(" %d ticks for %d bytes\n", t3-t2, tests[j].n);
                 printf("%s\n\n", tests[j].result);
             }
             sha256Terminate(c);
