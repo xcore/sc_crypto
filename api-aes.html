@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>API &mdash; Cryptography Component v0v1 documentation</title>
+    <title>AES interface &mdash; Cryptography Component v0v1 documentation</title>
     <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -56,13 +56,24 @@ document.getElementById('d1').style.height=h2 + "px";
 </div>
 
             
-  <div class="section" id="api">
-<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="aes-interface">
+<h1>AES interface<a class="headerlink" href="#aes-interface" title="Permalink to this headline">¶</a></h1>
+<p>The AES interface has functions for encryption and decryption.</p>
+<p>Encryption of a single block is performed by calling the funciton
+<tt class="docutils literal"><span class="pre">AESEncrypt()</span></tt>. If multiple blocks are to be encrypted with an identical
+key, the funciton <tt class="docutils literal"><span class="pre">AESEncryptKey()</span></tt> should be called once followed by
+multiple calls to <tt class="docutils literal"><span class="pre">AESEncryptBlock()</span></tt></p>
+<p>Decryption of a single block is performed by calling the funciton
+<tt class="docutils literal"><span class="pre">AESDecrypt()</span></tt>. If multiple blocks are to be decrypted with an identical
+key, the funciton <tt class="docutils literal"><span class="pre">AESDecryptKey()</span></tt> should be called once followed by
+multiple calls to <tt class="docutils literal"><span class="pre">AESDecryptBlock()</span></tt></p>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dt><dl class="function">
 <dt id="AESEncryptBlock">
 void <tt class="descname">AESEncryptBlock</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncryptBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given an expanded key.</p>
-<p>Use <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptExpandKey()</span></tt></a> to expand a 128-bit key. All are supplied as arrays of integers.</p>
+<p>Use <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><span>AESEncryptExpandKey()</span></a> to expand a 128-bit key. All are supplied as arrays of integers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -100,7 +111,7 @@ void <tt class="descname">AESEncryptExpandKey</tt><big>(</big>unsigned int<em>&n
 <dt id="AESEncrypt">
 void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncrypt" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given a key.</p>
-<p>All are supplied as arrays of integers. Calling this function is equivalent to first calling <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptExpandKey()</span></tt></a> and then <a class="reference internal" href="#AESEncryptBlock" title="AESEncryptBlock"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptBlock()</span></tt></a>.</p>
+<p>All are supplied as arrays of integers. Calling this function is equivalent to first calling <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><span>AESEncryptExpandKey()</span></a> and then <a class="reference internal" href="#AESEncryptBlock" title="AESEncryptBlock"><span>AESEncryptBlock()</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -120,7 +131,7 @@ void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plain
 <dt id="AESDecryptBlock">
 void <tt class="descname">AESDecryptBlock</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecryptBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given an expanded key.</p>
-<p>Use <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESEncryptExpandKey()</span></tt></a> to expand a 128-bit key. All are supplied as arrays of integers.</p>
+<p>Use <a class="reference internal" href="#AESEncryptExpandKey" title="AESEncryptExpandKey"><span>AESEncryptExpandKey()</span></a> to expand a 128-bit key. All are supplied as arrays of integers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -158,7 +169,7 @@ void <tt class="descname">AESDecryptExpandKey</tt><big>(</big>unsigned int<em>&n
 <dt id="AESDecrypt">
 void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecrypt" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given a key.</p>
-<p>All are supplied as arrays of integers. Calling this function is equivalent to first calling <a class="reference internal" href="#AESDecryptExpandKey" title="AESDecryptExpandKey"><tt class="xref c c-func docutils literal"><span class="pre">AESDecryptExpandKey()</span></tt></a> and then <a class="reference internal" href="#AESDecryptBlock" title="AESDecryptBlock"><tt class="xref c c-func docutils literal"><span class="pre">AESDecryptBlock()</span></tt></a>.</p>
+<p>All are supplied as arrays of integers. Calling this function is equivalent to first calling <a class="reference internal" href="#AESDecryptExpandKey" title="AESDecryptExpandKey"><span>AESDecryptExpandKey()</span></a> and then <a class="reference internal" href="#AESDecryptBlock" title="AESDecryptBlock"><span>AESDecryptBlock()</span></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -176,7 +187,7 @@ void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;ciphe
 
 </div>
 <div class="section" id="example">
-<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>An example program is shown below:</p>
 <div class="highlight-none"><div class="highlight"><pre>unsigned int plain[4] = {1,2,3,4};
 unsigned int key[4] = {12314241,4367465,1231244,1234569};
@@ -189,6 +200,7 @@ main() {
 </pre></div>
 </div>
 </div>
+</div>
 
 
 
@@ -199,12 +211,18 @@ main() {
         <div class="sphinxsidebarwrapper">
 <h3><a href="index.html">Cryptography Component (0v1)</a></h3>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Cryptographical software</a></li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">AES interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">

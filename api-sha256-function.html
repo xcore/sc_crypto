@@ -24,7 +24,7 @@
     <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
     <script type="text/javascript" src="_static/xcomment.js"></script>
     <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
-    <link rel="next" title="API" href="api-aes.html" />
+    <link rel="next" title="AES interface" href="api-aes.html" />
     <link rel="prev" title="SHA256 with a server thread" href="api-sha256-process.html" /> 
 
 <script>
@@ -61,16 +61,14 @@ document.getElementById('d1').style.height=h2 + "px";
             
   <div class="section" id="sha256-with-function-calls">
 <h1>SHA256 with function calls<a class="headerlink" href="#sha256-with-function-calls" title="Permalink to this headline">¶</a></h1>
-<p>Call the function <tt class="docutils literal"><span class="pre">sha256BlockBegin()</span></tt> to start computing a new hash, the
-function <tt class="docutils literal"><span class="pre">sha256BlockUpdate()</span></tt> to incorporate some more data into the
-hash, and the
-function <tt class="docutils literal"><span class="pre">sha256BlockEnd()</span></tt> to obtain the hash.</p>
+<p>The function-based SHA256 interface uses three functions. Call the function
+<tt class="docutils literal"><span class="pre">sha256BlockBegin()</span></tt> to start computing a new hash, the function
+<tt class="docutils literal"><span class="pre">sha256BlockUpdate()</span></tt> to incorporate some more data into the hash, and
+the function <tt class="docutils literal"><span class="pre">sha256BlockEnd()</span></tt> to obtain the hash.</p>
 <p>Note that the current interface can only perform the computation on a byte
 stream. This can be changed to a bit stream, the hashing thread
 itself works on a bit stream already, it just requires a different set of
 functions.</p>
-<p>The two threads communicate by means of a streaming channel; optimised for
-computation on a single core.</p>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dt><dl class="function">
@@ -153,6 +151,9 @@ void <tt class="descname">sha256BlockEnd</tt><big>(</big>unsigned int<em>&nbsp;h
       <div class="sphinxsidebar" id='d2'>
         <div class="sphinxsidebarwrapper">
 <h3><a href="index.html">Cryptography Component (0v1)</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Cryptographical software</a></li>
+</ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">SHA256 with function calls</a><ul>
@@ -162,8 +163,7 @@ void <tt class="descname">sha256BlockEnd</tt><big>(</big>unsigned int<em>&nbsp;h
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api-aes.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-aes.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html">AES interface</a></li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">

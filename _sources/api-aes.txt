@@ -1,3 +1,17 @@
+AES interface
+-------------
+
+The AES interface has functions for encryption and decryption.
+
+Encryption of a single block is performed by calling the funciton
+``AESEncrypt()``. If multiple blocks are to be encrypted with an identical
+key, the funciton ``AESEncryptKey()`` should be called once followed by
+multiple calls to ``AESEncryptBlock()``
+
+Decryption of a single block is performed by calling the funciton
+``AESDecrypt()``. If multiple blocks are to be decrypted with an identical
+key, the funciton ``AESDecryptKey()`` should be called once followed by
+multiple calls to ``AESDecryptBlock()``
 
 API
 ===
