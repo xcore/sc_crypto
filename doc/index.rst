@@ -1,6 +1,9 @@
 Documentation
 -------------
 
+Performance Summary
+'''''''''''''''''''
+
 .. toctree::
 
    summary.rst

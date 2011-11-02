@@ -3,7 +3,7 @@ Cryptographic routines
 
 :Stable release:  unreleased
 
-:Status:  33% feature complete.
+:Status:  60% feature complete.
 
 :Maintainer:  https://github.com/henkmuller
 
@@ -14,26 +14,21 @@ Key Features
 ============
 
 * Speed optimised SHA2
-* AES
+* Speed optimised AES decryption
+* AES encryption
 
 To Do
 =====
 
 * RSA
+* Key exchange algorithms
 
 Firmware Overview
 =================
 
 This repo intends to contain modules implementing various standard crypto
-algorithms for decryption, encryption and hashing.
-
-At present - only AES and SHA256 are implemented.
-
-The core of SHA256 has been
-hand-optimised and is encoded in assembly. On the fringe there are two
-interfaces (one with a server thread that does the hashing, and one where
-the hashing happens in the calling thread); there is some waste in the
-interface routines that ought to be optimised out.
+algorithms for decryption, encryption and hashing. At present - only AES
+and SHA256 are implemented.
 
 The documentation is stored in http://xcore.github.com/sc_crypto generated from
 the .h files and the doc directory.

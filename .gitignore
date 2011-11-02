@@ -1,4 +1,4 @@
-*/.build_*/*
+*/.build*/*
 */bin/*
 *.o
 *.xe
@@ -10,9 +10,5 @@
 
 doc/Doxyfile-e
 doc/_build/
-doc/cryptography_component.aux
-doc/cryptography_component.idx
-doc/cryptography_component.log
-doc/cryptography_component.out
-doc/cryptography_component.pdf
-doc/cryptography_component.tex
+doc/.doxygen
+doc/.sources
