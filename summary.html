@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cryptographical software &mdash; Cryptography Component v0v1 documentation</title>
+    <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0v1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
+    <script type="text/javascript" src="_static/xcomment.js"></script>
+    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="next" title="SHA256 with a server thread" href="api-sha256-process.html" />
+    <link rel="prev" title="Documentation" href="index.html" /> 
+
+<script>
+function setheight() {
+h1 = document.getElementById('d1').style.height;
+h2 = document.getElementById('d2').style.height;
+
+if (parseInt(h1) > parseInt(h2)) {
+document.getElementById('d2').style.height=h1 + "px";
+}
+else {
+document.getElementById('d1').style.height=h2 + "px";
+}
+
+}
+</script>
+</head>
+
+<body onload="setheight();">
+
+  
+
+    <div class="document" id='d1'>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+<div style="float: right">
+<a href="index.html"
+                        title="previous chapter"> &lt&lt </a>
+<a href="api-sha256-process.html"
+                        title="next chapter"> &gt&gt </a></p>
+</div>
+
+            
+  <div class="section" id="cryptographical-software">
+<h1>Cryptographical software<a class="headerlink" href="#cryptographical-software" title="Permalink to this headline">¶</a></h1>
+<p>There are several cryptographic standard algorithms, used for encryption,
+decryption, and authentication. Some of those algorithms have been
+implemented, and results are given in the tables below.</p>
+<p>The most important characteristics are the following:</p>
+<ul class="simple">
+<li>The key size, typically expressed as a number of bits (encryption and
+decryption)</li>
+<li>The digest size, typically expressed as a number of bits (hashing)</li>
+<li>The data bit rate. A typical values is 10 Mbit/s.</li>
+<li>Code can be optimised for size or for speed - with very different
+results. Results reported here are optimised for speed at the expense of
+memory.</li>
+</ul>
+<div class="section" id="module-aes">
+<h2>module_AES<a class="headerlink" href="#module-aes" title="Permalink to this headline">¶</a></h2>
+<p>A function running inside a single thread can encrypt and decrypt data as
+follows (assuming 8 threads on a 400 MHz part - or 50 MIPS threads):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="16%" />
+<col width="17%" />
+<col width="11%" />
+<col width="34%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Functionality</td>
+<td>Key size</td>
+<td>Data rate</td>
+<td>Memory</td>
+<td>Status</td>
+</tr>
+<tr><td>Encryption</td>
+<td>128 bit</td>
+<td>6.8 Mbit/s</td>
+<td>8K</td>
+<td>Implemented and tested</td>
+</tr>
+<tr><td>Decryption</td>
+<td>128 bit</td>
+<td>9.1 Mbit/s</td>
+<td>13K</td>
+<td>Implemented and tested</td>
+</tr>
+</tbody>
+</table>
+<p>Note that decryption has been severely optimised - encryption can possibly
+be optimised further.</p>
+<p>Both require the key to be expanded once, and then decrypt a large number
+of blocks.</p>
+</div>
+<div class="section" id="module-sha2">
+<h2>module_SHA2<a class="headerlink" href="#module-sha2" title="Permalink to this headline">¶</a></h2>
+<p>The SHA2 module has two interfaces: one that is a function call from within
+a single thread, and one that requires a separate thread to do the
+groundwork, which acts as a server. The performance is as follows:
+(assuming 8 threads on a 400 MHz part - or 50 MIPS threads):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="18%" />
+<col width="20%" />
+<col width="13%" />
+<col width="21%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Functionality</td>
+<td>Hash size</td>
+<td>Data rate</td>
+<td>Memory</td>
+<td>Status</td>
+</tr>
+<tr><td>Block based</td>
+<td>256 bit</td>
+<td>3.5 Mbit/s</td>
+<td>4.5K</td>
+<td>Implemented</td>
+</tr>
+<tr><td>Separate thread</td>
+<td>256 bit</td>
+<td>4.0 Mbit/s</td>
+<td>4.5K</td>
+<td>Implemented</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" id='d2'>
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Cryptography Component (0v1)</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Cryptographical software</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aes">module_AES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-sha2">module_SHA2</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html">AES interface</a></li>
+</ul>
+
+<div id="searchbox" style="display: none;margin-bottom: 10px;">
+  <h3>Search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+
+    <div class="footer">
+    </div>
+  </body>
+</html>
+
+
+
