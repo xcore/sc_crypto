@@ -24,6 +24,7 @@
     <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
     <script type="text/javascript" src="_static/xcomment.js"></script>
     <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="next" title="API" href="api-aes.html" />
     <link rel="prev" title="SHA256 with a server thread" href="api-sha256-process.html" /> 
 
 <script>
@@ -53,6 +54,8 @@ document.getElementById('d1').style.height=h2 + "px";
 <div style="float: right">
 <a href="api-sha256-process.html"
                         title="previous chapter"> &lt&lt </a>
+<a href="api-aes.html"
+                        title="next chapter"> &gt&gt </a></p>
 </div>
 
             
@@ -86,9 +89,6 @@ void <tt class="descname">sha256BlockBegin</tt><big>(</big>unsigned int<em>&nbsp
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256BlockUpdate</p>
-<p>sha256BlockEnd</p>
 </dd></dl>
 
 <dt><dl class="function">
@@ -109,16 +109,13 @@ void <tt class="descname">sha256BlockUpdate</tt><big>(</big>unsigned int<em>&nbs
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256BlockBegin</p>
-<p>sha256BlockEnd</p>
 </dd></dl>
 
 <dt><dl class="function">
 <dt id="sha256BlockEnd">
 void <tt class="descname">sha256BlockEnd</tt><big>(</big>unsigned int<em>&nbsp;hash[8]</em><big>)</big><a class="headerlink" href="#sha256BlockEnd" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is one of three functions that comprise the function based interface to the SHA256 library.</p>
-<p>It is ccompletes the hash by incorpoating a trailing &#8216;1&#8217;, padding, and the length of the message. On return of this function the array passed as teh first argument holds the hash.</p>
+<p>It completes the hash by incorporating a trailing &#8216;1&#8217;, padding, and the length of the message. On return of this function the array passed as the first argument holds the hash.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -130,9 +127,6 @@ void <tt class="descname">sha256BlockEnd</tt><big>(</big>unsigned int<em>&nbsp;h
 </tr>
 </tbody>
 </table>
-<p><strong>See also:</strong></p>
-<p>sha256BlockBegin</p>
-<p>sha256BlockUpdate</p>
 </dd></dl>
 
 </div>
@@ -166,6 +160,10 @@ void <tt class="descname">sha256BlockEnd</tt><big>(</big>unsigned int<em>&nbsp;h
 <li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html#example">Example</a></li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">
