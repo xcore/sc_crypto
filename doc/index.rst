@@ -1,6 +1,10 @@
 Documentation
 -------------
 
+.. toctree::
+
+   summary.rst
+
 SHA-256 user guide
 ''''''''''''''''''
 

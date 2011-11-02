@@ -1,20 +1,15 @@
 SHA256 with function calls
 ---------------------------
 
-
-Call the function ``sha256BlockBegin()`` to start computing a new hash, the
-function ``sha256BlockUpdate()`` to incorporate some more data into the
-hash, and the
-function ``sha256BlockEnd()`` to obtain the hash.
+The function-based SHA256 interface uses three functions. Call the function
+``sha256BlockBegin()`` to start computing a new hash, the function
+``sha256BlockUpdate()`` to incorporate some more data into the hash, and
+the function ``sha256BlockEnd()`` to obtain the hash.
 
 Note that the current interface can only perform the computation on a byte
 stream. This can be changed to a bit stream, the hashing thread
 itself works on a bit stream already, it just requires a different set of
 functions. 
-
-The two threads communicate by means of a streaming channel; optimised for
-computation on a single core.
-
 
 
 API

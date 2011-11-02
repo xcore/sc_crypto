@@ -1,20 +1,19 @@
 SHA256 with a server thread
 ---------------------------
 
-
-The current SHA256 implementation consists of two parts: a process that
+The thread-based SHA256 implementation consists of two parts: a process that
 computes the sha256 hash, and four function calls that can be used
 to supply data to the hashing process.
 
-In a par call the ``sha256Process()`` function, then in another thread
-call the function ``sha256Begin()`` to start computing a new hash, the
-function ``sha256Update()`` to incorporate some more data into the hash, the
-function ``sha256End()`` to obtain the hash, and the
-function ``sha256Terminate()`` to stop the hashing process when you are
-done computing hashes.
+In order to use this, call the ``sha256Process()`` function from within a
+par, then in another thread call the function ``sha256Begin()`` to start
+computing a new hash, the function ``sha256Update()`` to incorporate some
+more data into the hash, the function ``sha256End()`` to obtain the hash,
+and the function ``sha256Terminate()`` to stop the hashing process when you
+are done computing hashes; this terminates ``sha256Process()``
 
 The rationale for doing the computations in a separate thread is that it
-keeps the state in that thread, slightly speeding up computation.
+keeps the state in that thread, speeding up computation by around 10%.
 
 Note that the current interface can only perform the computation on a byte
 stream. This can be changed to a bit stream, the hashing thread
