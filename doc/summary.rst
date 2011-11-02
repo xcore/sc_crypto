@@ -27,12 +27,12 @@ follows (assuming 8 threads on a 400 MHz part - or 50 MIPS threads):
 +---------------+-----------+------------+--------+------------------------+
 | Functionality | Key size  | Data rate  | Memory | Status                 |
 +---------------+-----------+------------+--------+------------------------+
-| Encryption    | 128 bit   | 9.1 Mbit/s | 8K     | Implemented and tested |
+| Encryption    | 128 bit   | 6.8 Mbit/s | 8K     | Implemented and tested |
 +---------------+-----------+------------+--------+------------------------+
-| Decryption    | 128 bit   | 7.0 Mbit/s | 13K    | Implemented and tested |
+| Decryption    | 128 bit   | 9.1 Mbit/s | 13K    | Implemented and tested |
 +---------------+-----------+------------+--------+------------------------+
 
-Note that encryption has been severely optimised - decryption can possibly
+Note that decryption has been severely optimised - encryption can possibly
 be optimised further.
 
 Both require the key to be expanded once, and then decrypt a large number
