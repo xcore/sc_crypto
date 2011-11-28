@@ -1,5 +1,5 @@
-Cryptographical software
-========================
+Summary
+=======
 
 There are several cryptographic standard algorithms, used for encryption,
 decryption, and authentication. Some of those algorithms have been

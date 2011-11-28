@@ -24,7 +24,7 @@
     <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
     <script type="text/javascript" src="_static/xcomment.js"></script>
     <link rel="top" title="Cryptography Component 0v1 documentation" href="#" />
-    <link rel="next" title="Cryptographical software" href="summary.html" /> 
+    <link rel="next" title="Summary" href="summary.html" /> 
 
 <script>
 function setheight() {
@@ -58,53 +58,27 @@ document.getElementById('d1').style.height=h2 + "px";
             
   <div class="section" id="documentation">
 <h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="performance-summary">
-<h2>Performance Summary<a class="headerlink" href="#performance-summary" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="sha-256-user-guide">
-<h2>SHA-256 user guide<a class="headerlink" href="#sha-256-user-guide" title="Permalink to this headline">¶</a></h2>
-<p>There are two interfaces to SHA256 - process based and function based. The
-process based interface uses separate thread to perform the hashing. The
-function based interface uses the calling thread for the computations. The
-former interface is slightly faster. Both interfaces can be sped up further
-by judicious use of word vs byte manipulation instructions.</p>
-</div>
-<div class="section" id="aes-user-guide">
-<h2>AES user guide<a class="headerlink" href="#aes-user-guide" title="Permalink to this headline">¶</a></h2>
-<p>AES (Rijndael) encryption and decryption is performed using the functions
-below. Typically, a key is first expanded using the appropriate function
-(depending on whether one decrypts or encrypts) and then the stream is
-encoded/decoded using AESEncryptBlock() or AESDecryptBlock(). A convenience
-function calls both for single block streams.
-The AES interface assumes that all data is word-aligned. Character streams
-have to be aligned to fit on word boundaries.</p>
-</div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="summary.html">Cryptographical software</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="summary.html#module-aes">module_AES</a></li>
 <li class="toctree-l2"><a class="reference internal" href="summary.html#module-sha2">module_SHA2</a></li>
 </ul>
 </li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api-sha256-process.html#api">API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-sha256-process.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-sha256.html">SHA-256 user guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-sha256-process.html#api">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-sha256-process.html#example">Example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api-sha256-function.html#api">API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-sha256-function.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-sha256-function.html#api">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-sha256-function.html#example">Example</a></li>
 </ul>
 </li>
 </ul>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api-aes.html">AES interface</a><ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html">AES user guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api-aes.html#api">API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-aes.html#example">Example</a></li>
 </ul>
@@ -122,14 +96,9 @@ have to be aligned to fit on word boundaries.</p>
         <div class="sphinxsidebarwrapper">
 <h3><a href="#">Cryptography Component (0v1)</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="summary.html">Cryptographical software</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api-aes.html">AES interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-sha256.html">SHA-256 user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-aes.html">AES user guide</a></li>
 </ul>
 
 <div id="searchbox" style="display: none;margin-bottom: 10px;">

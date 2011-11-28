@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>AES interface &mdash; Cryptography Component 0v1 documentation</title>
+    <title>AES user guide &mdash; Cryptography Component 0v1 documentation</title>
     <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -56,9 +56,15 @@ document.getElementById('d1').style.height=h2 + "px";
 </div>
 
             
-  <div class="section" id="aes-interface">
-<h1>AES interface<a class="headerlink" href="#aes-interface" title="Permalink to this headline">¶</a></h1>
-<p>The AES interface has functions for encryption and decryption.</p>
+  <div class="section" id="aes-user-guide">
+<h1>AES user guide<a class="headerlink" href="#aes-user-guide" title="Permalink to this headline">¶</a></h1>
+<p>AES (Rijndael) encryption and decryption is performed using the functions
+below. Typically, a key is first expanded using the appropriate function
+(depending on whether one decrypts or encrypts) and then the stream is
+encoded/decoded using <tt class="docutils literal"><span class="pre">AESEncryptBlock()</span></tt> or <tt class="docutils literal"><span class="pre">AESDecryptBlock()</span></tt>. A convenience
+function calls both of these for streams that comprise just a single block.
+The AES interface assumes that all data is word-aligned. Character streams
+have to be aligned to fit on word boundaries.</p>
 <p>Encryption of a single block is performed by calling the funciton
 <tt class="docutils literal"><span class="pre">AESEncrypt()</span></tt>. If multiple blocks are to be encrypted with an identical
 key, the funciton <tt class="docutils literal"><span class="pre">AESEncryptKey()</span></tt> should be called once followed by
@@ -210,15 +216,10 @@ main() {
       <div class="sphinxsidebar" id='d2'>
         <div class="sphinxsidebarwrapper">
 <h3><a href="index.html">Cryptography Component (0v1)</a></h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="summary.html">Cryptographical software</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api-sha256-process.html">SHA256 with a server thread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-sha256-function.html">SHA256 with function calls</a></li>
-</ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">AES interface</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Cryptographical software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-sha256.html">SHA-256 user guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">AES user guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
 </ul>
