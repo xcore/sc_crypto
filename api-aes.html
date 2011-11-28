@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>AES interface &mdash; Cryptography Component v0v1 documentation</title>
+    <title>AES interface &mdash; Cryptography Component 0v1 documentation</title>
     <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
     <script type="text/javascript" src="_static/xcomment.js"></script>
-    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="top" title="Cryptography Component 0v1 documentation" href="index.html" />
     <link rel="prev" title="SHA256 with function calls" href="api-sha256-function.html" /> 
 
 <script>
@@ -69,7 +69,7 @@ key, the funciton <tt class="docutils literal"><span class="pre">AESDecryptKey()
 multiple calls to <tt class="docutils literal"><span class="pre">AESDecryptBlock()</span></tt></p>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<dt><dl class="function">
+<dl class="function">
 <dt id="AESEncryptBlock">
 void <tt class="descname">AESEncryptBlock</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncryptBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given an expanded key.</p>
@@ -78,7 +78,7 @@ void <tt class="descname">AESEncryptBlock</tt><big>(</big>unsigned int<em>&nbsp;
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>plainText</strong> &#8211; array of integers holding the input message</li>
 <li><strong>expanded</strong> &#8211; array of integers holding the expanded key</li>
 <li><strong>cipherText</strong> &#8211; array of integers where the encrypted message is stored</li>
@@ -89,7 +89,7 @@ void <tt class="descname">AESEncryptBlock</tt><big>(</big>unsigned int<em>&nbsp;
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="AESEncryptExpandKey">
 void <tt class="descname">AESEncryptExpandKey</tt><big>(</big>unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;expanded[]</em><big>)</big><a class="headerlink" href="#AESEncryptExpandKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function expands a 128-bit key into a format suitable for efficient encryption The output array needs to be at least 44 (that is Nb*(Nr+1)) words long.</p>
@@ -97,7 +97,7 @@ void <tt class="descname">AESEncryptExpandKey</tt><big>(</big>unsigned int<em>&n
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>key</strong> &#8211; array of integers holding the key</li>
 <li><strong>expanded</strong> &#8211; array of integers where the expanded key is stored</li>
 </ul>
@@ -107,7 +107,7 @@ void <tt class="descname">AESEncryptExpandKey</tt><big>(</big>unsigned int<em>&n
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="AESEncrypt">
 void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plainText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;cipherText[]</em><big>)</big><a class="headerlink" href="#AESEncrypt" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given a key.</p>
@@ -116,7 +116,7 @@ void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plain
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>plainText</strong> &#8211; array of integers holding the input message</li>
 <li><strong>key</strong> &#8211; array of integers holding the key</li>
 <li><strong>cipherText</strong> &#8211; array of integers where the encrypted message is stored</li>
@@ -127,7 +127,7 @@ void <tt class="descname">AESEncrypt</tt><big>(</big>unsigned int<em>&nbsp;plain
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="AESDecryptBlock">
 void <tt class="descname">AESDecryptBlock</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;expanded[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecryptBlock" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given an expanded key.</p>
@@ -136,7 +136,7 @@ void <tt class="descname">AESDecryptBlock</tt><big>(</big>unsigned int<em>&nbsp;
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>cipherText</strong> &#8211; array of integers holding the encrypted input message</li>
 <li><strong>expanded</strong> &#8211; array of integers holding the expanded key</li>
 <li><strong>decipheredText</strong> &#8211; array of integers where the decrypted message is stored</li>
@@ -147,7 +147,7 @@ void <tt class="descname">AESDecryptBlock</tt><big>(</big>unsigned int<em>&nbsp;
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="AESDecryptExpandKey">
 void <tt class="descname">AESDecryptExpandKey</tt><big>(</big>unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;expanded[]</em><big>)</big><a class="headerlink" href="#AESDecryptExpandKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function expands a 128-bit key into a format suitable for efficient decryption The output array needs to be at least 44 (that is Nb*(Nr+1)) words long.</p>
@@ -155,7 +155,7 @@ void <tt class="descname">AESDecryptExpandKey</tt><big>(</big>unsigned int<em>&n
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>key</strong> &#8211; array of integers holding the key</li>
 <li><strong>expanded</strong> &#8211; array of integers where the expanded key is stored</li>
 </ul>
@@ -165,7 +165,7 @@ void <tt class="descname">AESDecryptExpandKey</tt><big>(</big>unsigned int<em>&n
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="AESDecrypt">
 void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;cipherText[]</em>, unsigned int<em>&nbsp;key[]</em>, unsigned int<em>&nbsp;decipheredText[]</em><big>)</big><a class="headerlink" href="#AESDecrypt" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function encrypts a block of plaintext into a block of ciphertext, given a key.</p>
@@ -174,7 +174,7 @@ void <tt class="descname">AESDecrypt</tt><big>(</big>unsigned int<em>&nbsp;ciphe
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>cipherText</strong> &#8211; array of integers holding the encrypted input message</li>
 <li><strong>key</strong> &#8211; array of integers holding the key</li>
 <li><strong>decipheredText</strong> &#8211; array of integers where the decrypted message is stored</li>

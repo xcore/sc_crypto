@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SHA256 with a server thread &mdash; Cryptography Component v0v1 documentation</title>
+    <title>SHA256 with a server thread &mdash; Cryptography Component 0v1 documentation</title>
     <link rel="stylesheet" href="_static/xdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://mathjax.connectmv.com/MathJax.js"></script>
     <script type="text/javascript" src="_static/xcomment.js"></script>
-    <link rel="top" title="Cryptography Component v0v1 documentation" href="index.html" />
+    <link rel="top" title="Cryptography Component 0v1 documentation" href="index.html" />
     <link rel="next" title="SHA256 with function calls" href="api-sha256-function.html" />
     <link rel="prev" title="Cryptographical software" href="summary.html" /> 
 
@@ -80,7 +80,7 @@ functions.</p>
 computation on a single core.</p>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<dt><dl class="function">
+<dl class="function">
 <dt id="sha256Process">
 void <tt class="descname">sha256Process</tt><big>(</big>streaming chanend<em>&nbsp;c</em><big>)</big><a class="headerlink" href="#sha256Process" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is the SHA256 encryption server.</p>
@@ -90,7 +90,7 @@ void <tt class="descname">sha256Process</tt><big>(</big>streaming chanend<em>&nb
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>c</strong> &#8211; A streaming chanend that connects this server thread to the client.</li>
 </ul>
 </td>
@@ -99,7 +99,7 @@ void <tt class="descname">sha256Process</tt><big>(</big>streaming chanend<em>&nb
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="sha256Begin">
 void <tt class="descname">sha256Begin</tt><big>(</big>streaming chanend<em>&nbsp;c</em><big>)</big><a class="headerlink" href="#sha256Begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><span>sha256Process()</span></a>.</p>
@@ -108,7 +108,7 @@ void <tt class="descname">sha256Begin</tt><big>(</big>streaming chanend<em>&nbsp
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
 </ul>
 </td>
@@ -117,7 +117,7 @@ void <tt class="descname">sha256Begin</tt><big>(</big>streaming chanend<em>&nbsp
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="sha256Update">
 void <tt class="descname">sha256Update</tt><big>(</big>streaming chanend<em>&nbsp;c</em>, unsigned char<em>&nbsp;message[]</em>, int<em>&nbsp;n</em><big>)</big><a class="headerlink" href="#sha256Update" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><span>sha256Process()</span></a>.</p>
@@ -126,7 +126,7 @@ void <tt class="descname">sha256Update</tt><big>(</big>streaming chanend<em>&nbs
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
 <li><strong>message</strong> &#8211; An array of bytes that contains the data to be incorporated into the hash-function</li>
 <li><strong>n</strong> &#8211; The number of bytes to be incorporated.</li>
@@ -137,7 +137,7 @@ void <tt class="descname">sha256Update</tt><big>(</big>streaming chanend<em>&nbs
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="sha256End">
 void <tt class="descname">sha256End</tt><big>(</big>streaming chanend<em>&nbsp;c</em>, unsigned int<em>&nbsp;hash[8]</em><big>)</big><a class="headerlink" href="#sha256End" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><span>sha256Process()</span></a>.</p>
@@ -146,7 +146,7 @@ void <tt class="descname">sha256End</tt><big>(</big>streaming chanend<em>&nbsp;c
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
 <li><strong>hash</strong> &#8211; An array of words in which the hash will be written.</li>
 </ul>
@@ -156,7 +156,7 @@ void <tt class="descname">sha256End</tt><big>(</big>streaming chanend<em>&nbsp;c
 </table>
 </dd></dl>
 
-<dt><dl class="function">
+<dl class="function">
 <dt id="sha256Terminate">
 void <tt class="descname">sha256Terminate</tt><big>(</big>streaming chanend<em>&nbsp;c</em><big>)</big><a class="headerlink" href="#sha256Terminate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is one of the four functions that can be used with <a class="reference internal" href="#sha256Process" title="sha256Process"><span>sha256Process()</span></a>.</p>
@@ -165,7 +165,7 @@ void <tt class="descname">sha256Terminate</tt><big>(</big>streaming chanend<em>&
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>c</strong> &#8211; A streaming chanend that must be connected to the server thread.</li>
 </ul>
 </td>
