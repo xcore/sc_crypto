@@ -1,7 +1,13 @@
-AES interface
--------------
+AES user guide
+''''''''''''''
 
-The AES interface has functions for encryption and decryption.
+AES (Rijndael) encryption and decryption is performed using the functions
+below. Typically, a key is first expanded using the appropriate function
+(depending on whether one decrypts or encrypts) and then the stream is
+encoded/decoded using ``AESEncryptBlock()`` or ``AESDecryptBlock()``. A convenience
+function calls both of these for streams that comprise just a single block.
+The AES interface assumes that all data is word-aligned. Character streams
+have to be aligned to fit on word boundaries.
 
 Encryption of a single block is performed by calling the funciton
 ``AESEncrypt()``. If multiple blocks are to be encrypted with an identical

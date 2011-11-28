@@ -1,41 +1,10 @@
 Documentation
 -------------
 
-Performance Summary
-'''''''''''''''''''
-
 .. toctree::
 
    summary.rst
-
-SHA-256 user guide
-''''''''''''''''''
-
-There are two interfaces to SHA256 - process based and function based. The
-process based interface uses separate thread to perform the hashing. The
-function based interface uses the calling thread for the computations. The
-former interface is slightly faster. Both interfaces can be sped up further
-by judicious use of word vs byte manipulation instructions.
-
-
-.. toctree::
-
-   api-sha256-process.rst
-   api-sha256-function.rst
-
-AES user guide
-''''''''''''''
-
-AES (Rijndael) encryption and decryption is performed using the functions
-below. Typically, a key is first expanded using the appropriate function
-(depending on whether one decrypts or encrypts) and then the stream is
-encoded/decoded using AESEncryptBlock() or AESDecryptBlock(). A convenience
-function calls both for single block streams.
-The AES interface assumes that all data is word-aligned. Character streams
-have to be aligned to fit on word boundaries.
-
-.. toctree::
-
+   api-sha256.rst
    api-aes.rst
 
 
