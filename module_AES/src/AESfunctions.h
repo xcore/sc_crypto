@@ -29,6 +29,8 @@
                                     //for key length of 128, 192, and 256 respectively
 
 
+void DecryptInit(void);
+
 
 /** This function encrypts a block of plaintext into a block of ciphertext,
  * given an expanded key. Use AESEncryptExpandKey() to expand a 128-bit key.
