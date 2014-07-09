@@ -19,5 +19,6 @@
 
 extern unsigned char sBox[256];
 extern unsigned char sBoxInv[256];
+extern unsigned int T0InvTable[256];
 
 #endif
