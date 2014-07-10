@@ -13,6 +13,7 @@
  */
 
 #include "AESincludes.h"
+#include <string.h>
 
 unsigned int T0InvTable[256] = {
     0x50a7f451, 0x5365417e, 0xc3a4171a, 0x965e273a, 0xcb6bab3b, 0xf1459d1f, 0xab58faac, 0x9303e34b, 0x55fa3020, 0xf66d76ad, 0x9176cc88, 0x254c02f5, 0xfcd7e54f, 0xd7cb2ac5, 0x80443526, 0x8fa362b5,
@@ -54,33 +55,34 @@ static unsigned T3Inv(unsigned char x) {
 
 #pragma unsafe arrays
 void AESDecryptBlock(unsigned int cipherText[], unsigned int dw[], unsigned int decryptedText[]) {
-	unsigned int laststate0, laststate1, laststate2, laststate3;
-	unsigned int state0, state1, state2, state3;
+    unsigned int state[4];
 
-	// initialize and initial add round key
-	state0 = cipherText[0] ^ dw[40];
-	state1 = cipherText[1] ^ dw[41];
-	state2 = cipherText[2] ^ dw[42];
-	state3 = cipherText[3] ^ dw[43];
+    // initialize and initial add round key
+    state[0] = cipherText[0] ^ dw[40];
+    state[1] = cipherText[1] ^ dw[41];
+    state[2] = cipherText[2] ^ dw[42];
+    state[3] = cipherText[3] ^ dw[43];
 
 	// rounds 10 to 2
-	for (unsigned i = 10; i >= 2; i--) {
-		laststate0 = state0;
-		laststate1 = state1;
-		laststate2 = state2;
-		laststate3 = state3;
-
-		state0 = T0Inv((laststate0 << 24) >> 24) ^ T1Inv((laststate3 << 16) >> 24) ^ T2Inv((laststate2 << 8) >> 24) ^ T3Inv(laststate1 >> 24) ^ dw[4*i-4];
-		state1 = T0Inv((laststate1 << 24) >> 24) ^ T1Inv((laststate0 << 16) >> 24) ^ T2Inv((laststate3 << 8) >> 24) ^ T3Inv(laststate2 >> 24) ^ dw[4*i-3];
-		state2 = T0Inv((laststate2 << 24) >> 24) ^ T1Inv((laststate1 << 16) >> 24) ^ T2Inv((laststate0 << 8) >> 24) ^ T3Inv(laststate3 >> 24) ^ dw[4*i-2];
-		state3 = T0Inv((laststate3 << 24) >> 24) ^ T1Inv((laststate2 << 16) >> 24) ^ T2Inv((laststate1 << 8) >> 24) ^ T3Inv(laststate0 >> 24) ^ dw[4*i-1];
-	}
-	// round 1
-	decryptedText[0] = sBoxInv[(state0 << 24) >> 24] ^ (sBoxInv[(state3 << 16) >> 24] << 8) ^ (sBoxInv[(state2 << 8) >> 24] << 16) ^ (sBoxInv[state1 >> 24] << 24) ^ dw[0];
-	decryptedText[1] = sBoxInv[(state1 << 24) >> 24] ^ (sBoxInv[(state0 << 16) >> 24] << 8) ^ (sBoxInv[(state3 << 8) >> 24] << 16) ^ (sBoxInv[state2 >> 24] << 24) ^ dw[1];
-	decryptedText[2] = sBoxInv[(state2 << 24) >> 24] ^ (sBoxInv[(state1 << 16) >> 24] << 8) ^ (sBoxInv[(state0 << 8) >> 24] << 16) ^ (sBoxInv[state3 >> 24] << 24) ^ dw[2];
-	decryptedText[3] = sBoxInv[(state3 << 24) >> 24] ^ (sBoxInv[(state2 << 16) >> 24] << 8) ^ (sBoxInv[(state1 << 8) >> 24] << 16) ^ (sBoxInv[state0 >> 24] << 24) ^ dw[3];
-	return;
+    for (unsigned i = 10; i >= 2; i--) {
+        unsigned int nextstate[4];
+        for (unsigned j = 0; j != 4; j++) {
+            nextstate[j] = dw[4 * i + j - 4];
+            nextstate[j] ^= T0Inv((state[j] << 24) >> 24);
+            nextstate[j] ^= T1Inv((state[(j + 3) & 3] << 16) >> 24);
+            nextstate[j] ^= T2Inv((state[(j + 2) & 3] << 8) >> 24);
+            nextstate[j] ^= T3Inv((state[(j + 1) & 3]) >> 24);
+        }
+        memcpy(state, nextstate, sizeof(state));
+    }
+    // round 1
+    for (unsigned i = 0; i != 4; i++) {
+        decryptedText[i] = dw[i];
+        decryptedText[i] ^= sBoxInv[(state[i] << 24) >> 24];
+        decryptedText[i] ^= sBoxInv[(state[(i + 3) & 3] << 16) >> 24] << 8;
+        decryptedText[i] ^= sBoxInv[(state[(i + 2) & 3] << 8) >> 24] << 16;
+        decryptedText[i] ^= sBoxInv[(state[(i + 1) & 3]) >> 24] << 24;
+    }
 }
 
 void AESDecrypt(unsigned int cipherText[], unsigned int key[], unsigned int decryptedText[]){

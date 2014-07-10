@@ -11,6 +11,8 @@
  * Further hand crafted optimisations are implemented in the assembly version
  * See Encrypt.S for more details.
  */
+#include "AESincludes.h"
+#include <string.h>
 
 static unsigned int T0Table[256] = {
     0xa56363c6, 0x847c7cf8, 0x997777ee, 0x8d7b7bf6, 0x0df2f2ff, 0xbd6b6bd6, 0xb16f6fde, 0x54c5c591, 0x50303060, 0x03010102, 0xa96767ce, 0x7d2b2b56, 0x19fefee7, 0x62d7d7b5, 0xe6abab4d, 0x9a7676ec,
@@ -50,38 +52,37 @@ static unsigned T3(unsigned char x) {
     return val << 24 | val >> 8;
 }
 
-#include "AESincludes.h"
 #pragma unsafe arrays
 void AESEncryptBlock(unsigned int plainText[], unsigned int w[], unsigned int cipherText[]) {
-	unsigned int laststate0, laststate1, laststate2, laststate3;
-	unsigned int state0, state1, state2, state3;
+	unsigned int state[4];
 
 	//init and initial add key
-	state0 = plainText[0] ^ w[0];
-	state1 = plainText[1] ^ w[1];
-	state2 = plainText[2] ^ w[2];
-	state3 = plainText[3] ^ w[3];
+	state[0] = plainText[0] ^ w[0];
+	state[1] = plainText[1] ^ w[1];
+	state[2] = plainText[2] ^ w[2];
+	state[3] = plainText[3] ^ w[3];
 	
 	//rounds 1 to 9
-	for (int i = 1; i <= 9; i++) {
-		laststate0 = state0;
-		laststate1 = state1;
-		laststate2 = state2;
-		laststate3 = state3;
-		
-		state0 = T0((laststate0 << 24) >> 24) ^ T1((laststate1 << 16) >> 24) ^ T2((laststate2 << 8) >> 24) ^ T3(laststate3 >> 24) ^ w[4*i];
-		state1 = T0((laststate1 << 24) >> 24) ^ T1((laststate2 << 16) >> 24) ^ T2((laststate3 << 8) >> 24) ^ T3(laststate0 >> 24) ^ w[4*i+1];
-		state2 = T0((laststate2 << 24) >> 24) ^ T1((laststate3 << 16) >> 24) ^ T2((laststate0 << 8) >> 24) ^ T3(laststate1 >> 24) ^ w[4*i+2];
-		state3 = T0((laststate3 << 24) >> 24) ^ T1((laststate0 << 16) >> 24) ^ T2((laststate1 << 8) >> 24) ^ T3(laststate2 >> 24) ^ w[4*i+3];
+	for (unsigned i = 1; i <= 9; i++) {
+	    unsigned int nextstate[4];
+        for (unsigned j = 0; j != 4; j++) {
+            nextstate[j] = w[4 * i + j];
+            nextstate[j] ^= T0((state[j] << 24) >> 24);
+            nextstate[j] ^= T1((state[(j + 1) & 3] << 16) >> 24);
+            nextstate[j] ^= T2((state[(j + 2) & 3] << 8) >> 24);
+            nextstate[j] ^= T3((state[(j + 3) & 3]) >> 24);
+        }
+        memcpy(state, nextstate, sizeof(state));
 	}
 	
 	//round 10
-	cipherText[0] = sBox[(state0 << 24) >> 24] ^ (sBox[(state1 << 16) >> 24] << 8) ^ (sBox[(state2 << 8) >> 24] << 16) ^ (sBox[state3 >> 24] << 24) ^ w[40];
-	cipherText[1] = sBox[(state1 << 24) >> 24] ^ (sBox[(state2 << 16) >> 24] << 8) ^ (sBox[(state3 << 8) >> 24] << 16) ^ (sBox[state0 >> 24] << 24) ^ w[41];
-	cipherText[2] = sBox[(state2 << 24) >> 24] ^ (sBox[(state3 << 16) >> 24] << 8) ^ (sBox[(state0 << 8) >> 24] << 16) ^ (sBox[state1 >> 24] << 24) ^ w[42];
-	cipherText[3] = sBox[(state3 << 24) >> 24] ^ (sBox[(state0 << 16) >> 24] << 8) ^ (sBox[(state1 << 8) >> 24] << 16) ^ (sBox[state2 >> 24] << 24) ^ w[43];
-	
-	return;
+    for (unsigned i = 0; i != 4; i++) {
+        cipherText[i] = w[40 + i];
+        cipherText[i] ^= sBox[(state[i] << 24) >> 24];
+        cipherText[i] ^= sBox[(state[(i + 1) & 3] << 16) >> 24] << 8;
+        cipherText[i] ^= sBox[(state[(i + 2) & 3] << 8) >> 24] << 16;
+        cipherText[i] ^= sBox[(state[(i + 3) & 3]) >> 24] << 24;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma unsafe arrays
