@@ -12,7 +12,6 @@
  * See Encrypt.S for more details.
  */
 #include "AESincludes.h"
-#include <string.h>
 
 static unsigned int T0Table[256] = {
     0xa56363c6, 0x847c7cf8, 0x997777ee, 0x8d7b7bf6, 0x0df2f2ff, 0xbd6b6bd6, 0xb16f6fde, 0x54c5c591, 0x50303060, 0x03010102, 0xa96767ce, 0x7d2b2b56, 0x19fefee7, 0x62d7d7b5, 0xe6abab4d, 0x9a7676ec,
@@ -54,34 +53,49 @@ static unsigned T3(unsigned char x) {
 
 #pragma unsafe arrays
 void AESEncryptBlock(unsigned int plainText[], unsigned int w[], unsigned int cipherText[]) {
-	unsigned int state[4];
+    // The AES state is held in the first four elements and again in the last
+    // first four elements. This duplication avoids having to use a modulus
+    // operation when computing the element to access.
+	unsigned int state[8];
 
-	//init and initial add key
-	state[0] = plainText[0] ^ w[0];
-	state[1] = plainText[1] ^ w[1];
-	state[2] = plainText[2] ^ w[2];
-	state[3] = plainText[3] ^ w[3];
-	
-	//rounds 1 to 9
+	// Init and initial add key.
+	state[0] = state[4] = plainText[0] ^ w[0];
+	state[1] = state[5] = plainText[1] ^ w[1];
+	state[2] = state[6] = plainText[2] ^ w[2];
+	state[3] = state[7] = plainText[3] ^ w[3];
+
+    // Assumes little endian.
+    unsigned char *p0 = (unsigned char *)&state[0];
+    unsigned char *p1 = (unsigned char *)&state[1] + 1;
+    unsigned char *p2 = (unsigned char *)&state[2] + 2;
+    unsigned char *p3 = (unsigned char *)&state[3] + 3;
+	// Rounds 1 to 9.
 	for (unsigned i = 1; i <= 9; i++) {
 	    unsigned int nextstate[4];
-        for (unsigned j = 0; j != 4; j++) {
-            nextstate[j] = w[4 * i + j];
-            nextstate[j] ^= T0((state[j] << 24) >> 24);
-            nextstate[j] ^= T1((state[(j + 1) & 3] << 16) >> 24);
-            nextstate[j] ^= T2((state[(j + 2) & 3] << 8) >> 24);
-            nextstate[j] ^= T3((state[(j + 3) & 3]) >> 24);
+        for (unsigned j = 4; j != 0;) {
+            --j;
+            unsigned offset = j << 2;
+            nextstate[j] = T0(p0[offset]);
+            nextstate[j] ^= T1(p1[offset]);
+            nextstate[j] ^= T2(p2[offset]);
+            nextstate[j] ^= T3(p3[offset]);
+            nextstate[j] ^= w[4 * i + j];
         }
-        memcpy(state, nextstate, sizeof(state));
+        state[0] = state[4] = nextstate[0];
+        state[1] = state[5] = nextstate[1];
+        state[2] = state[6] = nextstate[2];
+        state[3] = state[7] = nextstate[3];
 	}
 	
-	//round 10
-    for (unsigned i = 0; i != 4; i++) {
-        cipherText[i] = w[40 + i];
-        cipherText[i] ^= sBox[(state[i] << 24) >> 24];
-        cipherText[i] ^= sBox[(state[(i + 1) & 3] << 16) >> 24] << 8;
-        cipherText[i] ^= sBox[(state[(i + 2) & 3] << 8) >> 24] << 16;
-        cipherText[i] ^= sBox[(state[(i + 3) & 3]) >> 24] << 24;
+	// Round 10.
+    for (unsigned i = 4; i != 0;) {
+        --i;
+        unsigned offset = i << 2;
+        cipherText[i] = sBox[p0[offset]];
+        cipherText[i] |= sBox[p1[offset]] << 8;
+        cipherText[i] |= sBox[p2[offset]] << 16;
+        cipherText[i] |= sBox[p3[offset]] << 24;
+        cipherText[i] ^= w[40 + i];
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
