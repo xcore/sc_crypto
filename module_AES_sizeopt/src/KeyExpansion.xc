@@ -26,18 +26,16 @@ void AESEncryptExpandKey(unsigned int key[], unsigned int w[]){
 	w[2] = key[2];
 	w[3] = key[3];
 
-	for(unsigned int t = 1; t < 11U; t++){//loop limit = Nb * (Nr + 1)
-		unsigned int temp = w[t*4 - 1];
-		//barrel shift
-		temp = (temp >> 8) | (temp << 24);
-		//sub word
-		temp = sBox[(temp << 24) >> 24] ^ (sBox[(temp << 16) >> 24] << 8) ^ (sBox[(temp << 8) >> 24] << 16) ^ (sBox[temp >> 24] << 24);
+	for (unsigned int t = 1; t < 11U; t++) {//loop limit = Nb * (Nr + 1)
+		unsigned int temp = w[t * 4 - 1];
+		// barrel shift and sub word
+		temp = sBox[(temp << 16) >> 24] ^ (sBox[(temp << 8) >> 24] << 8) ^ (sBox[temp >> 24] << 16) ^ (sBox[(temp << 24) >> 24] << 24);
 		temp ^= rCon[t];
 		
-		w[t*4] = w[t*4 - 4] ^ temp;
-		w[t*4 + 1] = w[t*4 - 3] ^ w[t*4];
-		w[t*4 + 2] = w[t*4 - 2] ^ w[t*4 + 1];
-		w[t*4 + 3] = w[t*4 - 1] ^ w[t*4 + 2];
+		w[t * 4] = w[t * 4 - 4] ^ temp;
+		w[t * 4 + 1] = w[t * 4 - 3] ^ w[t * 4];
+		w[t * 4 + 2] = w[t * 4 - 2] ^ w[t * 4 + 1];
+		w[t * 4 + 3] = w[t * 4 - 1] ^ w[t * 4 + 2];
 	}
 	return;
 }
