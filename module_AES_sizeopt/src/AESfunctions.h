@@ -1,16 +1,8 @@
-// Copyright (c) 2011, XMOS Ltd, All rights reserved
+// Copyright (c) 2011-2014, XMOS Ltd, All rights reserved
 // This software is freely distributable under a derivative of the
 // University of Illinois/NCSA Open Source License posted in
 // LICENSE.txt and at <http://github.xcore.com/>
 
-/*
- * Author: Suleiman Abu Kharmeh
- * Date: 19/November/2008
- *
- * The AES Encryption/Decryption prototypes.
- * This file is included from the AESincludes.h header file
- *	See AES.xc for a demonstration of how to use these functions.
- */
 #ifndef AESfunctions_h
 
 #define AESfunctions_h

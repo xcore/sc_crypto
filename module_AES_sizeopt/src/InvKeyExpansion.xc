@@ -1,17 +1,8 @@
-// Copyright (c) 2011, XMOS Ltd, All rights reserved
+// Copyright (c) 2011-2014, XMOS Ltd, All rights reserved
 // This software is freely distributable under a derivative of the
 // University of Illinois/NCSA Open Source License posted in
 // LICENSE.txt and at <http://github.xcore.com/>
 
-/*
- * Author: Suleiman Abu Kharmeh
- * Date: 19/November/2008
- *
- * This the most performance optimised XC version.
- * Further hand crafted optimisations are implemented in the assembly version
- * See InvKeyExpansion.S for more details.
- *
- */
 #include "AESincludes.h"
 
 static unsigned M0(unsigned char x) {
